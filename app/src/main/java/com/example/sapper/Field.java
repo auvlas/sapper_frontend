@@ -1,8 +1,7 @@
 package com.example.sapper;
 
-import static android.view.MotionEvent.ACTION_MOVE;
+import static android.view.MotionEvent.*;
 
-import android.annotation.Nullable;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
@@ -28,7 +27,7 @@ public class Field extends View {
 
     @Override
     public void computeScroll() {
-        computeScroll();
+        super.computeScroll();
         
         // Render scroll
     }
@@ -37,7 +36,7 @@ public class Field extends View {
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
 
-        switch (event) {
+        switch (event.getAction()) {
             case ACTION_MOVE:
                 // Scroll
                 return true;
