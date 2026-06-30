@@ -62,6 +62,8 @@ public class Game extends AppCompatActivity {
 
         m_binding.countMins.setText(getString(R.string.count_mins) + m_countMins);
 
+        m_binding.field.setMinsField(m_field);
+
         openCell();
     }
     public void openCell(View view) {

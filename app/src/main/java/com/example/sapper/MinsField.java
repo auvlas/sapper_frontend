@@ -28,6 +28,8 @@ public class MinsField {
 
     public native long getCountCols();
 
+    // public native long getCountCells();
+
     public native long getCountEmpty();
 
     public native long getCountEmptyOpen();
