@@ -14,11 +14,13 @@ import android.view.View;
 
 public class Field extends View {
     private MinsField m_minsField = null;
+    private long m_shiftHeight = dpToPx(100);
+    private long m_shiftWidth = dpToPx(100);
     private long m_offsetTop = 0;
     private long m_offsetLeft = 0;
     private Paint m_paint = new Paint();
-    private int m_heightCell = dpToPx(40);
-    private int m_widthCell = dpToPx(40);
+    private int m_heightCell = dpToPx(100);
+    private int m_widthCell = dpToPx(100);
     private float m_lastX = 0;
     private float m_lastY = 0;
 
@@ -26,7 +28,7 @@ public class Field extends View {
         super(context, attrs);
 
         m_paint.setColor(0xffffffff);
-        m_paint.setStrokeWidth(dpToPx(4));
+        m_paint.setStrokeWidth(dpToPx(8));
     }
 
     public int dpToPx(int dp) {
@@ -75,7 +77,6 @@ public class Field extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // Получаем текущие размеры поля для ограничения скроллинга
         int widthCell = m_widthCell + getStrokeWidth();
         int heightCell = m_heightCell + getStrokeWidth();
 
@@ -87,34 +88,30 @@ public class Field extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                // Запоминаем точку, где палец коснулся экрана
                 m_lastX = event.getX();
                 m_lastY = event.getY();
                 return true;
 
             case MotionEvent.ACTION_MOVE:
-                // Вычисляем, на сколько сместился палец
                 float deltaX = event.getX() - m_lastX;
                 float deltaY = event.getY() - m_lastY;
 
-                // Обновляем смещение по горизонтали (скроллим в противоположную сторону)
                 m_offsetLeft -= deltaX;
-                // Ограничиваем скроллинг, чтобы не уходить в минус и не листать дальше края поля
                 if (widthEnd > width) {
-                    m_offsetLeft = Math.max(0, Math.min(m_offsetLeft, widthEnd - width));
+                    m_offsetLeft = Math.max(0, Math.min(m_offsetLeft,
+                            widthEnd - width + getStrokeWidth() + m_shiftWidth * 2));
                 } else {
-                    m_offsetLeft = 0;
+                    m_offsetLeft = width / 2 - widthEnd / 2;
                 }
 
-                // Обновляем смещение по вертикали
                 m_offsetTop -= deltaY;
                 if (heightEnd > height) {
-                    m_offsetTop = Math.max(0, Math.min(m_offsetTop, heightEnd - height));
+                    m_offsetTop = Math.max(0, Math.min(m_offsetTop,
+                            heightEnd - height + getStrokeWidth() +  m_shiftHeight * 2));
                 } else {
-                    m_offsetTop = 0;
+                    m_offsetTop = height / 2 - heightEnd / 2;
                 }
 
-                // Сохраняем текущие координаты пальца для следующего шага
                 m_lastX = event.getX();
                 m_lastY = event.getY();
 
@@ -138,53 +135,33 @@ public class Field extends View {
         long rows = m_minsField.getCountRows();
         long cols = m_minsField.getCountCols();
 
+        int strokeWidth = getStrokeWidth();
+        int halfStrokeWidth = strokeWidth / 2;
+
         int width = getWidth();
         int height = getHeight();
 
-        int widthCell = m_widthCell + getStrokeWidth();
-        int heightCell = m_heightCell + getStrokeWidth();
+        int widthCell = m_widthCell + strokeWidth;
+        int heightCell = m_heightCell + strokeWidth;
 
-        long widthEnd = cols * widthCell;
-        long heightEnd = rows * heightCell;
+        long widthEnd = cols * widthCell + strokeWidth + m_shiftWidth * 2;
+        long heightEnd = rows * heightCell + strokeWidth + m_shiftHeight * 2;
 
-        long offsetLeft = m_offsetLeft;
-        long offsetTop = m_offsetTop;
+        long offsetLeft = m_offsetLeft - strokeWidth;
+        long offsetTop = m_offsetTop - strokeWidth;
 
-        if (widthEnd < width) {
-            offsetLeft = 0;
-        } else if (offsetLeft + width > widthEnd) {
-            offsetLeft = widthEnd - width;
+        long startX = (-(offsetLeft % widthCell)) % widthCell - halfStrokeWidth;
+        long startY = (-(offsetTop % heightCell)) % heightCell - halfStrokeWidth;
+
+        long stopX = (width < widthEnd - offsetLeft ? width : widthEnd - offsetLeft) + halfStrokeWidth;
+        long stopY = (height < heightEnd - offsetTop ? height : heightEnd - offsetTop) + halfStrokeWidth;
+
+        for (long x = startX; x <= stopX; x += widthCell) {
+            canvas.drawLine(x, startY - halfStrokeWidth, x, stopY - halfStrokeWidth, m_paint);
         }
 
-        if (heightEnd < height) {
-            offsetTop = 0;
-        } else if (offsetTop + height > heightEnd) {
-            offsetTop = heightEnd - height;
-        }
-
-        long startX = (widthCell - (offsetLeft % widthCell)) % widthCell;
-        long startY = (heightCell - (offsetTop % heightCell)) % heightCell;
-
-        long stopX = width < widthEnd ? width : widthEnd;
-        long stopY = height < heightEnd ? height : heightEnd;
-
-        if (startX < 0) {
-            startX += widthCell;
-        }
-
-        if (startY < 0) {
-            startY += heightCell;
-        }
-
-        Log.d("top", String.valueOf(offsetTop));
-        Log.d("left", String.valueOf(offsetLeft));
-
-        for (; startX <= stopX; startX += widthCell) {
-            canvas.drawLine(startX, 0.0f, startX, stopY, m_paint);
-        }
-
-        for (; startY <= stopY; startY += heightCell) {
-            canvas.drawLine(0.0f, startY, stopX, startY, m_paint);
+        for (long y = startY; y <= stopY; y += heightCell) {
+            canvas.drawLine(startX - halfStrokeWidth, y, stopX - halfStrokeWidth, y, m_paint);
         }
     }
 }
