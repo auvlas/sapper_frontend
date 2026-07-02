@@ -34,13 +34,21 @@ public class Field extends View {
         m_paint.setStrokeWidth(dpToPx(8));
     }
 
+    public int getScrollLimitWidth() {
+        return m_scrollLimitWidth;
+    }
+
     public void setScrollLimitWidth(int dp) {
         m_scrollLimitWidth = dpToPx(dp);
         postInvalidateOnAnimation();
     }
 
+    public int getScrollLimitHeight() {
+        return m_scrollLimitHeight;
+    }
+
     public void setScrollLimitHeight(int dp) {
-        m_scrollLimitWidth = dpToPx(dp);
+        m_scrollLimitHeight = dpToPx(dp);
         postInvalidateOnAnimation();
     }
 
@@ -142,12 +150,14 @@ public class Field extends View {
                 m_offsetLeft -= (long) deltaX;
 
                 m_offsetLeft = Math.max(0, Math.min(m_offsetLeft,
-                        widthEnd - width + getStrokeWidth() + ((long) (m_shiftWidth + m_scrollLimitWidth) << 1)));
+                        widthEnd - width + getStrokeWidth() +
+                                ((long) (m_shiftWidth + m_scrollLimitWidth) << 1)));
 
                 m_offsetTop -= (long) deltaY;
 
                 m_offsetTop = Math.max(0, Math.min(m_offsetTop,
-                        heightEnd - height + getStrokeWidth() + ((long) (m_shiftHeight + m_scrollLimitHeight) << 1)));
+                        heightEnd - height + getStrokeWidth() +
+                                ((long) (m_shiftHeight + m_scrollLimitHeight) << 1)));
 
                 m_lastX = event.getX();
                 m_lastY = event.getY();
@@ -188,10 +198,12 @@ public class Field extends View {
         long heightEnd = rows * heightCell + halfStrokeWidth + offsetHeight;
 
         int startX = m_offsetLeft > offsetWidth ?
-                (int) (-((m_offsetLeft - offsetWidth - halfStrokeWidth) % widthCell)) - halfStrokeWidth :
+                (int) (-((m_offsetLeft - offsetWidth - halfStrokeWidth)
+                        % widthCell)) - halfStrokeWidth :
                 (int) (offsetWidth - m_offsetLeft);
         int startY = m_offsetTop > offsetHeight ?
-                (int) (-((m_offsetTop - offsetHeight - halfStrokeWidth) % heightCell)) - halfStrokeWidth :
+                (int) (-((m_offsetTop - offsetHeight - halfStrokeWidth)
+                        % heightCell)) - halfStrokeWidth :
                 (int) (offsetHeight - m_offsetTop);
 
         Log.d("startX1", String.valueOf(startX));
