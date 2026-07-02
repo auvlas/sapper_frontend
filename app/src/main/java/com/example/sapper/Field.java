@@ -170,10 +170,12 @@ public class Field extends View {
                         heightEnd - height + getStrokeWidth() +
                                 ((long) (m_shiftHeight + m_scrollLimitHeight) << 1)));
 
+                if (m_lastX != event.getX() || m_lastY != event.getY()) {
+                    postInvalidateOnAnimation();
+                }
+
                 m_lastX = event.getX();
                 m_lastY = event.getY();
-
-                postInvalidateOnAnimation();
 
                 return true;
 
