@@ -2,22 +2,27 @@ package com.example.sapper;
 
 import static android.view.MotionEvent.*;
 
-import static androidx.core.util.TypedValueCompat.dpToPx;
+import androidx.core.util.TypedValueCompat;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.core.util.TypedValueCompat;
+
 public class Field extends View {
     private MinsField m_minsField = null;
-    private long m_shiftHeight = dpToPx(100);
-    private long m_shiftWidth = dpToPx(100);
-    private long m_offsetTop = 0;
-    private long m_offsetLeft = 0;
+    private int m_scrollLimitWidth = dpToPx(200);
+    private int m_scrollLimitHeight = dpToPx(200);
+    private int m_shiftHeight = dpToPx(100);
+    private int m_shiftWidth = dpToPx(100);
+    private long m_offsetTop = m_scrollLimitWidth;
+    private long m_offsetLeft = m_scrollLimitHeight;
     private Paint m_paint = new Paint();
     private int m_heightCell = dpToPx(100);
     private int m_widthCell = dpToPx(100);
@@ -32,13 +37,13 @@ public class Field extends View {
     }
 
     public int dpToPx(int dp) {
-        float density = getContext().getResources().getDisplayMetrics().density;
-        return (int) (dp * density);
+        DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
+        return (int) TypedValueCompat.dpToPx(dp, metrics);
     }
 
     public int pxToDp(int px) {
-        float density = getContext().getResources().getDisplayMetrics().density;
-        return (int) (px / density);
+        DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
+        return (int) TypedValueCompat.pxToDp(px, metrics);
     }
 
     public int getColor() {
@@ -97,20 +102,14 @@ public class Field extends View {
                 float deltaY = event.getY() - m_lastY;
 
                 m_offsetLeft -= deltaX;
-                if (widthEnd > width) {
-                    m_offsetLeft = Math.max(0, Math.min(m_offsetLeft,
-                            widthEnd - width + getStrokeWidth() + m_shiftWidth * 2));
-                } else {
-                    m_offsetLeft = width / 2 - widthEnd / 2;
-                }
+
+                m_offsetLeft = Math.max(0, Math.min(m_offsetLeft,
+                        widthEnd - width + getStrokeWidth() + ((m_shiftWidth + m_scrollLimitWidth) << 1)));
 
                 m_offsetTop -= deltaY;
-                if (heightEnd > height) {
-                    m_offsetTop = Math.max(0, Math.min(m_offsetTop,
-                            heightEnd - height + getStrokeWidth() +  m_shiftHeight * 2));
-                } else {
-                    m_offsetTop = height / 2 - heightEnd / 2;
-                }
+
+                m_offsetTop = Math.max(0, Math.min(m_offsetTop,
+                        heightEnd - height + getStrokeWidth() + ((m_shiftHeight + m_scrollLimitHeight) << 1)));
 
                 m_lastX = event.getX();
                 m_lastY = event.getY();
@@ -138,30 +137,45 @@ public class Field extends View {
         int strokeWidth = getStrokeWidth();
         int halfStrokeWidth = strokeWidth / 2;
 
+        int offsetWidth = m_scrollLimitWidth + m_shiftWidth;
+        int offsetHeight = m_scrollLimitHeight + m_shiftHeight;
+
         int width = getWidth();
         int height = getHeight();
 
         int widthCell = m_widthCell + strokeWidth;
         int heightCell = m_heightCell + strokeWidth;
 
-        long widthEnd = cols * widthCell + strokeWidth + m_shiftWidth * 2;
-        long heightEnd = rows * heightCell + strokeWidth + m_shiftHeight * 2;
+        long widthEnd = cols * widthCell + halfStrokeWidth + offsetWidth;
+        long heightEnd = rows * heightCell + halfStrokeWidth + offsetHeight;
 
-        long offsetLeft = m_offsetLeft - strokeWidth;
-        long offsetTop = m_offsetTop - strokeWidth;
+        int startX = m_offsetLeft > offsetWidth ?
+                (int) (-((m_offsetLeft - offsetWidth - halfStrokeWidth) % widthCell)) - halfStrokeWidth :
+                (int) (offsetWidth - m_offsetLeft);
+        int startY = m_offsetTop > offsetHeight ?
+                (int) (-((m_offsetTop - offsetHeight - halfStrokeWidth) % heightCell)) - halfStrokeWidth :
+                (int) (offsetHeight - m_offsetTop);
 
-        long startX = (-(offsetLeft % widthCell)) % widthCell - halfStrokeWidth;
-        long startY = (-(offsetTop % heightCell)) % heightCell - halfStrokeWidth;
+        Log.d("startX1", String.valueOf(startX));
 
-        long stopX = (width < widthEnd - offsetLeft ? width : widthEnd - offsetLeft) + halfStrokeWidth;
-        long stopY = (height < heightEnd - offsetTop ? height : heightEnd - offsetTop) + halfStrokeWidth;
+        Log.d("startX2", String.valueOf(startX));
 
-        for (long x = startX; x <= stopX; x += widthCell) {
-            canvas.drawLine(x, startY - halfStrokeWidth, x, stopY - halfStrokeWidth, m_paint);
+        int stopX = (width < widthEnd - m_offsetLeft ?
+                width : (int) (widthEnd - m_offsetLeft)) + halfStrokeWidth;
+        int stopY = (height < heightEnd - m_offsetTop ?
+                height : (int) (heightEnd - m_offsetTop)) + halfStrokeWidth;
+
+        int startXStroke = startX - halfStrokeWidth;
+        int startYStroke = startY - halfStrokeWidth;
+        int stopXStroke = stopX - halfStrokeWidth;
+        int stopYStroke = stopY - halfStrokeWidth;
+
+        for (int x = startX; x <= stopX; x += widthCell) {
+            canvas.drawLine(x, startYStroke, x, stopYStroke, m_paint);
         }
 
-        for (long y = startY; y <= stopY; y += heightCell) {
-            canvas.drawLine(startX - halfStrokeWidth, y, stopX - halfStrokeWidth, y, m_paint);
+        for (int y = startY; y <= stopY; y += heightCell) {
+            canvas.drawLine(startXStroke, y, stopXStroke, y, m_paint);
         }
     }
 }
