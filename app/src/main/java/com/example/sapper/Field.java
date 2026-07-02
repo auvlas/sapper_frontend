@@ -12,9 +12,10 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.MotionEvent.*;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 
-public class Field extends View {
+public class Field extends View implements ScaleGestureDetector.OnScaleGestureListener {
     private MinsField m_minsField = null;
     private int m_scrollLimitWidth = dpToPx(200);
     private int m_scrollLimitHeight = dpToPx(200);
@@ -23,20 +24,30 @@ public class Field extends View {
     private long m_offsetTop = m_scrollLimitWidth;
     private long m_offsetLeft = m_scrollLimitHeight;
     private final Paint m_paint = new Paint();
+    private int m_maxHeightCell = dpToPx(200);
+    private int m_maxWidthCell = dpToPx(200);
+    private int m_maxStrokeWidth = dpToPx(8);
     private int m_heightCell = dpToPx(100);
     private int m_widthCell = dpToPx(100);
+    private int m_minHeightCell = dpToPx(20);
+    private int m_minWidthCell = dpToPx(20);
+    private int m_minStrokeWidth = dpToPx(2);
     private float m_lastX = 0;
     private float m_lastY = 0;
     private long m_timeLastPressDown = 0;
     private long m_offsetTopLastPressDown = 0;
     private long m_offsetLeftLastPressDown = 0;
+    private final ScaleGestureDetector m_scaleGestureDetector =
+            new ScaleGestureDetector(this.getContext(), this);;
+    private int m_scaleFactor = 0x28888888;
 
 
     public Field(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         m_paint.setColor(0xffffffff);
-        m_paint.setStrokeWidth(dpToPx(8));
+
+        normalizeScale();
     }
 
     public int getScrollLimitWidth() {
@@ -130,6 +141,38 @@ public class Field extends View {
         postInvalidateOnAnimation();
     }
 
+    protected void normalizeScale() {
+        postInvalidateOnAnimation();
+        int deltaWidthCell = m_maxWidthCell - m_minWidthCell;
+        int deltaHeightCell = m_maxHeightCell - m_minHeightCell;
+        int deltaStrokeWidth = m_maxStrokeWidth - m_minStrokeWidth;
+
+        m_widthCell = m_minWidthCell + (m_scaleFactor / (0x7fffffff / deltaWidthCell));
+        m_heightCell = m_minHeightCell + (m_scaleFactor / (0x7fffffff / deltaHeightCell));
+        setStrokeWidth(m_minStrokeWidth + (m_scaleFactor / (0x7fffffff / deltaStrokeWidth)));
+    }
+
+    @Override
+    public boolean onScaleBegin(ScaleGestureDetector detector) {
+        return true;
+    }
+
+    @Override
+    public boolean onScale(ScaleGestureDetector detector) {
+        int scaleFactor = (int) ((float) m_scaleFactor * detector.getScaleFactor());
+
+        m_scaleFactor = Math.max(1, scaleFactor);
+
+        normalizeScale();
+
+        return true;
+    }
+
+    @Override
+    public void onScaleEnd(ScaleGestureDetector detector) {
+    }
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -141,6 +184,8 @@ public class Field extends View {
 
         int width = getWidth();
         int height = getHeight();
+
+        m_scaleGestureDetector.onTouchEvent(event);
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -192,7 +237,7 @@ public class Field extends View {
                 return true;
         }
 
-        return super.onTouchEvent(event);
+        return true;
     }
 
     @Override
