@@ -1,9 +1,9 @@
 package com.example.sapper;
 
-import static android.view.MotionEvent.*;
-
+import androidx.annotation.NonNull;
 import androidx.core.util.TypedValueCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,8 +13,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.core.util.TypedValueCompat;
-
 public class Field extends View {
     private MinsField m_minsField = null;
     private int m_scrollLimitWidth = dpToPx(200);
@@ -23,7 +21,7 @@ public class Field extends View {
     private int m_shiftWidth = dpToPx(100);
     private long m_offsetTop = m_scrollLimitWidth;
     private long m_offsetLeft = m_scrollLimitHeight;
-    private Paint m_paint = new Paint();
+    private final Paint m_paint = new Paint();
     private int m_heightCell = dpToPx(100);
     private int m_widthCell = dpToPx(100);
     private float m_lastX = 0;
@@ -34,6 +32,52 @@ public class Field extends View {
 
         m_paint.setColor(0xffffffff);
         m_paint.setStrokeWidth(dpToPx(8));
+    }
+
+    public void setScrollLimitWidth(int dp) {
+        m_scrollLimitWidth = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
+    public void setScrollLimitHeight(int dp) {
+        m_scrollLimitWidth = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
+    public int getShiftWidth() {
+        return m_shiftWidth;
+    }
+
+    public void setShiftWidth(int dp) {
+        m_shiftWidth = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
+    public int getShiftHeight() {
+        return m_shiftHeight;
+    }
+
+    public void setShiftHeight(int dp) {
+        m_shiftHeight = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
+    public int getWidthCell() {
+        return m_widthCell;
+    }
+
+    public void setWidthCell(int dp) {
+        m_widthCell = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
+    public int getHeightCell() {
+        return m_heightCell;
+    }
+
+    public void setHeightCell(int dp) {
+        m_heightCell = dpToPx(dp);
+        postInvalidateOnAnimation();
     }
 
     public int dpToPx(int dp) {
@@ -73,13 +117,7 @@ public class Field extends View {
         postInvalidateOnAnimation();
     }
 
-    @Override
-    public void computeScroll() {
-        super.computeScroll();
-        
-        // Render scroll
-    }
-
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int widthCell = m_widthCell + getStrokeWidth();
@@ -101,15 +139,15 @@ public class Field extends View {
                 float deltaX = event.getX() - m_lastX;
                 float deltaY = event.getY() - m_lastY;
 
-                m_offsetLeft -= deltaX;
+                m_offsetLeft -= (long) deltaX;
 
                 m_offsetLeft = Math.max(0, Math.min(m_offsetLeft,
-                        widthEnd - width + getStrokeWidth() + ((m_shiftWidth + m_scrollLimitWidth) << 1)));
+                        widthEnd - width + getStrokeWidth() + ((long) (m_shiftWidth + m_scrollLimitWidth) << 1)));
 
-                m_offsetTop -= deltaY;
+                m_offsetTop -= (long) deltaY;
 
                 m_offsetTop = Math.max(0, Math.min(m_offsetTop,
-                        heightEnd - height + getStrokeWidth() + ((m_shiftHeight + m_scrollLimitHeight) << 1)));
+                        heightEnd - height + getStrokeWidth() + ((long) (m_shiftHeight + m_scrollLimitHeight) << 1)));
 
                 m_lastX = event.getX();
                 m_lastY = event.getY();
@@ -122,7 +160,7 @@ public class Field extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         Log.d("onDraw", "draw");
