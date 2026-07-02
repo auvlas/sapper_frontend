@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.MotionEvent.*;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
@@ -24,13 +23,13 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     private long m_offsetTop = m_scrollLimitWidth;
     private long m_offsetLeft = m_scrollLimitHeight;
     private final Paint m_paint = new Paint();
-    private int m_maxHeightCell = dpToPx(200);
     private int m_maxWidthCell = dpToPx(200);
+    private int m_maxHeightCell = dpToPx(200);
     private int m_maxStrokeWidth = dpToPx(8);
-    private int m_heightCell = dpToPx(100);
     private int m_widthCell = dpToPx(100);
-    private int m_minHeightCell = dpToPx(20);
+    private int m_heightCell = dpToPx(100);
     private int m_minWidthCell = dpToPx(20);
+    private int m_minHeightCell = dpToPx(20);
     private int m_minStrokeWidth = dpToPx(2);
     private float m_lastX = 0;
     private float m_lastY = 0;
@@ -50,8 +49,61 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         normalizeScale();
     }
 
+    public int getMaxWidthCell() {
+        return pxToDp(m_maxWidthCell);
+    }
+
+    public void setMaxWidthCell(int dp) {
+        m_maxWidthCell = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
+    public int getMaxHeightCell() {
+        return pxToDp(m_maxHeightCell);
+    }
+
+    public void setMaxHeightCell(int dp) {
+        m_maxHeightCell = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
+    public int getMaxStrokeWidth() {
+        return pxToDp(m_maxStrokeWidth);
+    }
+
+    public void setMaxStrokeWidth(int dp) {
+        m_maxStrokeWidth = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
+    public int getMinWidthCell() {
+        return pxToDp(m_minWidthCell);
+    }
+
+    public void setMinWidthCell(int dp) {
+        m_minWidthCell = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
+    public int getMinHeightCell() {
+        return pxToDp(m_minHeightCell);
+    }
+
+    public void setMinHeightCell(int dp) {
+        m_minHeightCell = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+    public int getMinStrokeWidth() {
+        return pxToDp(m_minStrokeWidth);
+    }
+
+    public void setMinStrokeWidth(int dp) {
+        m_minStrokeWidth = dpToPx(dp);
+        postInvalidateOnAnimation();
+    }
+
     public int getScrollLimitWidth() {
-        return m_scrollLimitWidth;
+        return pxToDp(m_scrollLimitWidth);
     }
 
     public void setScrollLimitWidth(int dp) {
@@ -60,7 +112,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     }
 
     public int getScrollLimitHeight() {
-        return m_scrollLimitHeight;
+        return pxToDp(m_scrollLimitHeight);
     }
 
     public void setScrollLimitHeight(int dp) {
@@ -69,7 +121,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     }
 
     public int getShiftWidth() {
-        return m_shiftWidth;
+        return pxToDp(m_shiftWidth);
     }
 
     public void setShiftWidth(int dp) {
@@ -78,7 +130,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     }
 
     public int getShiftHeight() {
-        return m_shiftHeight;
+        return pxToDp(m_shiftHeight);
     }
 
     public void setShiftHeight(int dp) {
@@ -86,30 +138,21 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         postInvalidateOnAnimation();
     }
 
-    public int getWidthCell() {
-        return m_widthCell;
+    public int getScaleFactor() {
+        return m_scaleFactor;
     }
 
-    public void setWidthCell(int dp) {
-        m_widthCell = dpToPx(dp);
+    public void setScaleFactor(int dp) {
+        m_scaleFactor = dpToPx(dp);
         postInvalidateOnAnimation();
     }
 
-    public int getHeightCell() {
-        return m_heightCell;
-    }
-
-    public void setHeightCell(int dp) {
-        m_heightCell = dpToPx(dp);
-        postInvalidateOnAnimation();
-    }
-
-    public int dpToPx(int dp) {
+    private int dpToPx(int dp) {
         DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
         return (int) TypedValueCompat.dpToPx(dp, metrics);
     }
 
-    public int pxToDp(int px) {
+    private int pxToDp(int px) {
         DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
         return (int) TypedValueCompat.pxToDp(px, metrics);
     }
@@ -120,11 +163,6 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
 
     public void setColor(int color) {
         m_paint.setColor(color);
-        postInvalidateOnAnimation();
-    }
-
-    public void setStrokeWidth(int strokeWidth) {
-        m_paint.setStrokeWidth(strokeWidth);
         postInvalidateOnAnimation();
     }
 
@@ -149,16 +187,17 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
 
         m_widthCell = m_minWidthCell + (m_scaleFactor / (0x7fffffff / deltaWidthCell));
         m_heightCell = m_minHeightCell + (m_scaleFactor / (0x7fffffff / deltaHeightCell));
-        setStrokeWidth(m_minStrokeWidth + (m_scaleFactor / (0x7fffffff / deltaStrokeWidth)));
+        m_paint.setStrokeWidth((float) (m_minStrokeWidth +
+                (m_scaleFactor / (0x7fffffff / deltaStrokeWidth))));
     }
 
     @Override
-    public boolean onScaleBegin(ScaleGestureDetector detector) {
+    public boolean onScaleBegin(@NonNull ScaleGestureDetector detector) {
         return true;
     }
 
     @Override
-    public boolean onScale(ScaleGestureDetector detector) {
+    public boolean onScale(@NonNull ScaleGestureDetector detector) {
         int scaleFactor = (int) ((float) m_scaleFactor * detector.getScaleFactor());
 
         m_scaleFactor = Math.max(1, scaleFactor);
@@ -169,7 +208,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     }
 
     @Override
-    public void onScaleEnd(ScaleGestureDetector detector) {
+    public void onScaleEnd(@NonNull ScaleGestureDetector detector) {
     }
 
 
