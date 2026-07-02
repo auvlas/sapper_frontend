@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.MotionEvent.*;
 import android.view.View;
 
 public class Field extends View {
@@ -26,6 +27,10 @@ public class Field extends View {
     private int m_widthCell = dpToPx(100);
     private float m_lastX = 0;
     private float m_lastY = 0;
+    private long m_timeLastPressDown = 0;
+    private long m_offsetTopLastPressDown = 0;
+    private long m_offsetLeftLastPressDown = 0;
+
 
     public Field(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -141,6 +146,12 @@ public class Field extends View {
             case MotionEvent.ACTION_DOWN:
                 m_lastX = event.getX();
                 m_lastY = event.getY();
+
+                m_timeLastPressDown = 0;
+
+                m_offsetTopLastPressDown = -1;
+                m_offsetLeftLastPressDown = -1;
+
                 return true;
 
             case MotionEvent.ACTION_MOVE:
@@ -163,6 +174,19 @@ public class Field extends View {
                 m_lastY = event.getY();
 
                 postInvalidateOnAnimation();
+
+                return true;
+
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+
+                m_timeLastPressDown = System.currentTimeMillis();
+
+                m_offsetTopLastPressDown = m_offsetTop;
+                m_offsetLeftLastPressDown = m_offsetLeft;
+
+                postInvalidateOnAnimation();
+
                 return true;
         }
 
@@ -179,6 +203,7 @@ public class Field extends View {
             return;
         }
 
+
         long rows = m_minsField.getCountRows();
         long cols = m_minsField.getCountCols();
 
@@ -188,14 +213,64 @@ public class Field extends View {
         int offsetWidth = m_scrollLimitWidth + m_shiftWidth;
         int offsetHeight = m_scrollLimitHeight + m_shiftHeight;
 
-        int width = getWidth();
-        int height = getHeight();
-
         int widthCell = m_widthCell + strokeWidth;
         int heightCell = m_heightCell + strokeWidth;
 
         long widthEnd = cols * widthCell + halfStrokeWidth + offsetWidth;
         long heightEnd = rows * heightCell + halfStrokeWidth + offsetHeight;
+
+        int width = getWidth();
+        int height = getHeight();
+
+
+        if (0 != m_timeLastPressDown) {
+            int deltaTime = (int) (System.currentTimeMillis() - m_timeLastPressDown);
+            int timeDistance = dpToPx(1) * (int) deltaTime;
+
+            if (-1 != m_offsetLeftLastPressDown) {
+                if (m_offsetLeft < m_scrollLimitWidth) {
+                    m_offsetLeft = m_offsetLeftLastPressDown + timeDistance;
+                    if (m_offsetLeft >= m_scrollLimitWidth) {
+                        m_offsetLeft = m_scrollLimitWidth;
+                        m_offsetLeftLastPressDown = -1;
+                    } else {
+                        postInvalidateOnAnimation();
+                    }
+                } else if (m_offsetLeft > widthEnd + m_shiftWidth - width) {
+                    m_offsetLeft = m_offsetLeftLastPressDown - timeDistance;
+                    if (m_offsetLeft <= widthEnd + m_shiftWidth - width) {
+                        m_offsetLeft = widthEnd + m_shiftWidth - width;
+                        m_offsetLeftLastPressDown = -1;
+                    } else {
+                        postInvalidateOnAnimation();
+                    }
+                } else {
+                    m_offsetLeftLastPressDown = -1;
+                }
+            }
+
+            if (-1 != m_offsetTopLastPressDown) {
+                if (m_offsetTop < m_scrollLimitHeight) {
+                    m_offsetTop = m_offsetTopLastPressDown + timeDistance;
+                    if (m_offsetTop >= m_scrollLimitHeight) {
+                        m_offsetTop = m_scrollLimitHeight;
+                        m_offsetTopLastPressDown = -1;
+                    } else {
+                        postInvalidateOnAnimation();
+                    }
+                } else if (m_offsetTop > heightEnd + m_shiftHeight - height) {
+                    m_offsetTop = m_offsetTopLastPressDown - timeDistance;
+                    if (m_offsetTop <= heightEnd + m_shiftHeight - height) {
+                        m_offsetTop = heightEnd + m_shiftHeight - height;
+                        m_offsetTopLastPressDown = -1;
+                    } else {
+                        postInvalidateOnAnimation();
+                    }
+                } else {
+                    m_offsetTopLastPressDown = -1;
+                }
+            }
+        }
 
         int startX = m_offsetLeft > offsetWidth ?
                 (int) (-((m_offsetLeft - offsetWidth - halfStrokeWidth)
