@@ -416,7 +416,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
             startX = startX < 0 ? (startX % widthCell) - widthCell : startX;
 
             stopX = (width < widthEnd - m_offsetLeft ? width :
-                    (int) (widthEnd - m_offsetLeft)) + halfStrokeWidth;
+                    (int) (widthEnd - m_offsetLeft)) + strokeWidth;
         } else {
             stopX = startX + (int) widthFieldRow + strokeWidth;
         }
@@ -428,7 +428,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
             startY = startY < 0 ? (startY % heightCell) - heightCell : startY;
 
             stopY = (height < heightEnd - m_offsetTop ? height :
-                    (int) (heightEnd - m_offsetTop)) + halfStrokeWidth;
+                    (int) (heightEnd - m_offsetTop)) + strokeWidth;
         } else {
             stopY = startY + (int) heightFieldRow + strokeWidth;
         }
