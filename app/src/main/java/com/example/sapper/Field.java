@@ -217,11 +217,15 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int widthCell = m_widthCell + getStrokeWidth();
-        int heightCell = m_heightCell + getStrokeWidth();
+        int strokeWidth = getStrokeWidth();
 
-        long widthEnd = (m_minsField != null ? m_minsField.getCountCols() : 0) * widthCell;
-        long heightEnd = (m_minsField != null ? m_minsField.getCountRows() : 0) * heightCell;
+        int widthCell = m_widthCell + strokeWidth;
+        int heightCell = m_heightCell + strokeWidth;
+
+        long widthField = (m_minsField != null ? m_minsField.getCountCols() : 0)
+                * widthCell + strokeWidth;
+        long heightField = (m_minsField != null ? m_minsField.getCountRows() : 0)
+                * heightCell + strokeWidth;
 
         int width = getWidth();
         int height = getHeight();
@@ -253,14 +257,16 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
                 float deltaX = curX - m_lastX;
                 float deltaY = curY - m_lastY;
 
-                long totalShiftX = ((long) (m_shiftWidth + m_scrollLimitWidth) << 1);
-                long totalShiftY = ((long) (m_shiftHeight + m_scrollLimitHeight) << 1);
+                int totalShiftX = (m_shiftWidth + m_scrollLimitWidth) << 1;
+                int totalShiftY = (m_shiftHeight + m_scrollLimitHeight) << 1;
 
                 m_offsetLeft = Math.max(0L, Math.min((long) (m_offsetLeft + deltaX),
-                        (widthEnd > width ? widthEnd - width + getStrokeWidth() : width) + totalShiftX));
+                        widthField + (m_shiftWidth * 2L) > width ?
+                                widthField + totalShiftX : width + m_scrollLimitWidth * 2L));
 
                 m_offsetTop = Math.max(0L, Math.min((long) (m_offsetTop + deltaY),
-                        (heightEnd > height ? heightEnd - height + getStrokeWidth() : height) + totalShiftY));
+                        heightField + (m_shiftHeight * 2L) > height ?
+                                heightField + totalShiftY : height + m_scrollLimitHeight * 2L));
 
                 if (m_lastX != curX || m_lastY != curY) {
                     postInvalidateOnAnimation();
@@ -335,7 +341,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         int width = getWidth();
         int height = getHeight();
 
-
+        /*
         if (0 != m_timeLastPressDown) {
             int deltaTime = (int) (System.currentTimeMillis() - m_timeLastPressDown);
             int timeDistance = dpToPx(1) * deltaTime;
@@ -408,28 +414,37 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
                 }
             }
         }
+        */
 
-        int startX = (int) m_offsetLeft - m_scrollLimitWidth + m_shiftWidth - halfStrokeWidth;
+
+        int startX = 0;
         int stopX = 0;
 
         if (widthField + (m_shiftWidth * 2L) > width) {
-            startX = startX < 0 ? (startX % widthCell) - widthCell : startX;
+            startX = (int) (m_offsetLeft < offsetWidth
+                    ? m_offsetLeft - offsetWidth - halfStrokeWidth
+                    : ((m_offsetLeft - halfStrokeWidth) % widthCell) - widthCell);
 
-            stopX = (width < widthEnd - m_offsetLeft ? width :
-                    (int) (widthEnd - m_offsetLeft)) + strokeWidth;
+            stopX = (int) Math.min(width + halfStrokeWidth, startX + widthField);
         } else {
+            startX = (int) m_offsetLeft - m_scrollLimitWidth + m_shiftWidth - halfStrokeWidth;
+
             stopX = startX + (int) widthFieldRow + strokeWidth;
         }
 
-        int startY = (int) m_offsetTop - m_scrollLimitHeight + m_shiftHeight - halfStrokeWidth;
+
+        int startY = 0;
         int stopY = 0;
 
         if (heightField + (m_shiftHeight * 2L) > height) {
-            startY = startY < 0 ? (startY % heightCell) - heightCell : startY;
+            startY = (int) (m_offsetTop < offsetHeight
+                    ? m_offsetTop - offsetHeight - halfStrokeWidth
+                    : ((m_offsetTop - halfStrokeWidth) % heightCell) - heightCell);
 
-            stopY = (height < heightEnd - m_offsetTop ? height :
-                    (int) (heightEnd - m_offsetTop)) + strokeWidth;
+            stopY = (int) Math.min(height + halfStrokeWidth, startY + heightField);
         } else {
+            startY = (int) m_offsetTop - m_scrollLimitHeight + m_shiftHeight - halfStrokeWidth;
+
             stopY = startY + (int) heightFieldRow + strokeWidth;
         }
 
