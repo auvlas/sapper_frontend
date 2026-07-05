@@ -95,6 +95,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         m_minHeightCell = dpToPx(dp);
         postInvalidateOnAnimation();
     }
+
     public int getMinStrokeWidth() {
         return pxToDp(m_minStrokeWidth);
     }
@@ -312,6 +313,186 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         return true;
     }
 
+
+    private int timeDistance() {
+        int deltaTime = (int) (System.currentTimeMillis() - m_timeLastPressDown);
+        return dpToPx(1) * (deltaTime / 4);
+    }
+
+    private void centeringStopWidth() {
+        m_offsetLeftLastPressDown = -1;
+    }
+
+    private void centeringWidthBigTop(int timeDistance) {
+        m_offsetLeft = m_offsetLeftLastPressDown + timeDistance;
+        if (m_offsetLeft >= m_scrollLimitWidth) {
+            m_offsetLeft = m_scrollLimitWidth;
+            centeringStopWidth();
+        } else {
+            postInvalidateOnAnimation();
+        }
+    }
+
+    private void centeringWidthBigBottom(int timeDistance, int width, long fieldWidthEnd) {
+        m_offsetLeft = m_offsetLeftLastPressDown - timeDistance;
+        if (m_offsetLeft <= fieldWidthEnd + m_shiftWidth - width) {
+            m_offsetLeft = fieldWidthEnd + m_shiftWidth - width;
+            centeringStopWidth();
+            m_offsetLeftLastPressDown = -1;
+        } else {
+            postInvalidateOnAnimation();
+        }
+    }
+
+    private void centeringWidthBig(int timeDistance, int width, long fieldWidthEnd) {
+        if (m_offsetLeft < m_scrollLimitWidth) {
+            centeringWidthBigTop(timeDistance);
+        } else if (m_offsetLeft > fieldWidthEnd + m_shiftWidth - width) {
+            centeringWidthBigBottom(timeDistance, width, fieldWidthEnd);
+        } else {
+            centeringStopWidth();
+            m_offsetLeftLastPressDown = -1;
+        }
+    }
+
+    private void centeringWidthSmallTop(int timeDistance, int offsetWidth) {
+        m_offsetLeft = m_offsetLeftLastPressDown + timeDistance;
+        if (m_offsetLeft >= offsetWidth) {
+            m_offsetLeft = offsetWidth;
+            centeringStopWidth();
+            m_offsetLeftLastPressDown = -1;
+        } else {
+            postInvalidateOnAnimation();
+        }
+    }
+
+    private void centeringWidthSmallBottom(int timeDistance, int width, long widthField) {
+        m_offsetLeft =m_offsetLeftLastPressDown - timeDistance;
+        if (m_offsetLeft <= width - widthField -m_shiftWidth +m_scrollLimitWidth) {
+            m_offsetLeft = width - widthField - m_shiftWidth + m_scrollLimitWidth;
+            centeringStopWidth();
+            m_offsetLeftLastPressDown = -1;
+        } else {
+            postInvalidateOnAnimation();
+        }
+    }
+    private void centeringWidthSmall(int timeDistance, int width, long widthField, int offsetWidth) {
+        if (m_offsetLeft < offsetWidth) {
+            centeringWidthSmallTop(timeDistance, offsetWidth);
+        } else if (m_offsetLeft > width - widthField - m_shiftWidth + m_scrollLimitWidth) {
+            centeringWidthSmallBottom(timeDistance, width, widthField);
+        } else {
+            centeringStopWidth();
+            m_offsetLeftLastPressDown = -1;
+        }
+    }
+
+    private void centeringWidth(int timeDistance, boolean isBigWidth,
+                                int width, long widthField, int offsetWidth, long fieldWidthEnd) {
+        if (isBigWidth) {
+            centeringWidthBig(timeDistance, width, fieldWidthEnd);
+        } else {
+            centeringWidthSmall(timeDistance, width, widthField, offsetWidth);
+        }
+    }
+
+    private void centeringStopHeight() {
+        m_offsetTopLastPressDown = -1;
+    }
+
+    private void centeringHeightBigTop(int timeDistance) {
+        m_offsetTop = m_offsetTopLastPressDown + timeDistance;
+        if (m_offsetTop >= m_scrollLimitHeight) {
+            m_offsetTop = m_scrollLimitHeight;
+            centeringStopHeight();
+        } else {
+            postInvalidateOnAnimation();
+        }
+    }
+
+    private void centeringHeightBigBottom(int timeDistance, int height, long fieldHeightEnd) {
+        m_offsetTop = m_offsetTopLastPressDown - timeDistance;
+        if (m_offsetTop <= fieldHeightEnd + m_shiftHeight - height) {
+            m_offsetTop = fieldHeightEnd + m_shiftHeight - height;
+            centeringStopHeight();
+        } else {
+            postInvalidateOnAnimation();
+        }
+    }
+
+    private void centeringHeightBig(int timeDistance, int height, long fieldHeightEnd) {
+        if (m_offsetTop < m_scrollLimitWidth) {
+            centeringHeightBigTop(timeDistance);
+        } else if (m_offsetTop > fieldHeightEnd + m_shiftWidth - height) {
+            centeringHeightBigBottom(timeDistance, height, fieldHeightEnd);
+        } else {
+            centeringStopHeight();
+        }
+    }
+
+    private void centeringHeightSmallTop(int timeDistance, int offsetHeight) {
+        m_offsetTop = m_offsetTopLastPressDown + timeDistance;
+        if (m_offsetTop >= offsetHeight) {
+            m_offsetTop = offsetHeight;
+            centeringStopHeight();
+        } else {
+            postInvalidateOnAnimation();
+        }
+    }
+
+    private void centeringHeightSmallBottom(int timeDistance, int height, long heightField) {
+        m_offsetTop =m_offsetTopLastPressDown - timeDistance;
+        if (m_offsetTop <= height - heightField - m_shiftHeight + m_scrollLimitHeight) {
+            m_offsetTop = height - heightField - m_shiftHeight + m_scrollLimitHeight;
+            centeringStopHeight();
+        } else {
+            postInvalidateOnAnimation();
+        }
+    }
+
+    private void centeringHeightSmall(int timeDistance, int height, long heightField, int offsetHeight) {
+        if (m_offsetTop < offsetHeight) {
+            centeringHeightSmallTop(timeDistance, offsetHeight);
+        } else if (m_offsetTop > height - heightField - m_shiftHeight + m_scrollLimitHeight) {
+            centeringHeightSmallBottom(timeDistance, height, heightField);
+        } else {
+            centeringStopHeight();
+        }
+    }
+
+    private void centeringHeight(int timeDistance, boolean isBigHeight,
+                                 int height, long heightField, int offsetHeight, long fieldHeightEnd) {
+        if (isBigHeight) {
+            centeringHeightBig(timeDistance, height, fieldHeightEnd);
+        } else {
+            centeringHeightSmall(timeDistance, height, heightField, offsetHeight);
+        }
+    }
+
+    private void centeringForce(boolean isBigWidth, boolean isBigHeight, int width, int height,
+                              long widthField, long heightField, int offsetWidth,
+                              int offsetHeight, long fieldWidthEnd, long fieldHeightEnd) {
+        int timeDistance = timeDistance();
+
+        if (-1 != m_offsetLeftLastPressDown) {
+            centeringWidth(timeDistance, isBigWidth, width, widthField, offsetWidth, fieldWidthEnd);
+        }
+
+        if (-1 != m_offsetTopLastPressDown) {
+            centeringHeight(timeDistance, isBigHeight, height, heightField, offsetHeight, fieldHeightEnd);
+        }
+    }
+
+    private void centeringNormally(boolean isBigWidth, boolean isBigHeight, int width, int height,
+                           long widthField, long heightField, int offsetWidth,
+                           int offsetHeight, long fieldWidthEnd, long fieldHeightEnd) {
+        if (0 != m_timeLastPressDown) {
+            centeringForce(isBigWidth, isBigHeight, width, height,
+                    widthField, heightField, offsetWidth,
+                    offsetHeight, fieldWidthEnd, fieldHeightEnd);
+        }
+    }
+
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
@@ -344,75 +525,31 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         long widthField = widthFieldRow + strokeWidth;
         long heightField = heightFieldRow + strokeWidth;
 
-        long widthEnd = widthFieldRow + halfStrokeWidth + offsetWidth;
-        long heightEnd = heightFieldRow + halfStrokeWidth + offsetHeight;
+        long fieldWidthEnd = widthFieldRow + halfStrokeWidth + offsetWidth;
+        long fieldHeightEnd = heightFieldRow + halfStrokeWidth + offsetHeight;
 
         int width = getWidth();
         int height = getHeight();
 
-        if (0 != m_timeLastPressDown) {
-            int deltaTime = (int) (System.currentTimeMillis() - m_timeLastPressDown);
-            int timeDistance = dpToPx(1) * (deltaTime / 4);
+        boolean isBigWidth = widthField + (m_shiftWidth * 2L) > width;
+        boolean isBigHeight = heightField + (m_shiftHeight * 2L) > height;
 
-            if (-1 != m_offsetLeftLastPressDown) {
-                if (m_offsetLeft < offsetWidth) {
-                    m_offsetLeft = m_offsetLeftLastPressDown + timeDistance;
-                    if (m_offsetLeft >= offsetWidth) {
-                        m_offsetLeft = offsetWidth;
-                        m_offsetLeftLastPressDown = -1;
-                    } else {
-                        postInvalidateOnAnimation();
-                    }
-                } else if (widthField + (m_shiftWidth * 2L) <= width) {
-                    if (m_offsetLeft > width - widthField - m_shiftWidth + m_scrollLimitWidth) {
-                        m_offsetLeft = m_offsetLeftLastPressDown - timeDistance;
-                        if (m_offsetLeft <= width - widthField - m_shiftWidth + m_scrollLimitWidth) {
-                            m_offsetLeft = width - widthField - m_shiftWidth + m_scrollLimitWidth;
-                            m_offsetLeftLastPressDown = -1;
-                        } else {
-                            postInvalidateOnAnimation();
-                        }
-                    }
-                } else {
-                    m_offsetLeftLastPressDown = -1;
-                }
-            }
-
-            if (-1 != m_offsetTopLastPressDown) {
-                if (m_offsetTop < offsetHeight) {
-                    m_offsetTop = m_offsetTopLastPressDown + timeDistance;
-                    if (m_offsetTop >= offsetHeight) {
-                        m_offsetTop = offsetHeight;
-                        m_offsetTopLastPressDown = -1;
-                    } else {
-                        postInvalidateOnAnimation();
-                    }
-                } else if (heightField + (m_shiftHeight * 2L) <= height) {
-                    if (m_offsetTop > height - heightField - m_shiftHeight + m_scrollLimitHeight) {
-                        m_offsetTop = m_offsetTopLastPressDown - timeDistance;
-                        if (m_offsetTop <= height - heightField - m_shiftHeight + m_scrollLimitHeight) {
-                            m_offsetTop = height - heightField - m_shiftHeight + m_scrollLimitHeight;
-                            m_offsetTopLastPressDown = -1;
-                        } else {
-                            postInvalidateOnAnimation();
-                        }
-                    }
-                } else {
-                    m_offsetTopLastPressDown = -1;
-                }
-            }
-        }
+        centeringNormally(isBigWidth, isBigHeight, width, height,
+                widthField, heightField, offsetWidth,
+                offsetHeight, fieldWidthEnd, fieldHeightEnd);
 
 
         int startX = 0;
         int stopX = 0;
 
-        if (widthField + (m_shiftWidth * 2L) > width) {
-            startX = (int) (m_offsetLeft < offsetWidth
-                    ? m_offsetLeft - halfStrokeWidth
-                    : ((m_offsetLeft - halfStrokeWidth) % widthCell) - widthCell);
+        if (isBigWidth) {
+            startX = m_offsetLeft > offsetWidth ?
+                    (int) (-((m_offsetLeft - offsetWidth - halfStrokeWidth)
+                            % widthCell)) - halfStrokeWidth :
+                    (int) (offsetWidth - m_offsetLeft);
 
-            stopX = (int) Math.min(width + halfStrokeWidth, startX + widthField);
+            stopX = (width < fieldWidthEnd - m_offsetLeft ?
+                    width : (int) (fieldWidthEnd - m_offsetLeft)) + halfStrokeWidth;
         } else {
             startX = (int) m_offsetLeft - m_scrollLimitWidth - halfStrokeWidth;
 
@@ -423,12 +560,14 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         int startY = 0;
         int stopY = 0;
 
-        if (heightField + (m_shiftHeight * 2L) > height) {
-            startY = (int) (m_offsetTop < offsetHeight
-                    ? m_offsetTop - halfStrokeWidth
-                    : ((m_offsetTop - halfStrokeWidth) % heightCell) - heightCell);
+        if (isBigHeight) {
+            startY = m_offsetTop > offsetHeight ?
+                    (int) (-((m_offsetTop - offsetHeight - halfStrokeWidth)
+                            % heightCell)) - halfStrokeWidth :
+                    (int) (offsetHeight - m_offsetTop);
 
-            stopY = (int) Math.min(height + halfStrokeWidth, startY + heightField);
+            stopY = (height < fieldHeightEnd - m_offsetTop ?
+                    height : (int) (fieldHeightEnd - m_offsetTop)) + halfStrokeWidth;
         } else {
             startY =  (int) m_offsetTop - m_scrollLimitHeight - halfStrokeWidth;
 
