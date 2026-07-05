@@ -1,50 +1,62 @@
 package com.example.sapper;
 
-public class MinsField {
+public class MinsField implements Grid.Map, AutoCloseable {
     private long m_nativePtr = 0;
 
-    public MinsField(long rows, long cols, long mins) {
-        init(rows, cols, mins);
+    public MinsField(long rows, long cols, long mins, long radiusMins) {
+        init(rows, cols, mins, radiusMins);
     }
 
-    public void finalize() {
-        destroy();
+    @Override
+    public synchronized void close() {
+        if (m_nativePtr != 0) {
+            destroy();
+            m_nativePtr = 0;
+        }
     }
 
-    private native void init(long rows, long cols, long mins);
+    protected void finalize() throws Throwable {
+        try {
+            close();
+        } finally {
+            super.finalize();
+        }
+    }
 
-    public native long getCountMins();
-    public native byte getCountMinsNear(long row, long col);
+    private native void init(long rows, long cols, long mins, long radiusMins);
 
-    public native boolean isMin(long row, long col);
+    public native long getMins();
+    public native byte getMins(long row, long col);
 
-    public native void upFlag(long row , long col);
+    public native boolean getMin(long row, long col);
 
-    public native void downFlag(long row , long col);
+    public native void setUpFlag(long row , long col);
 
-    public native boolean isFlag(long row, long col);
+    public native void setDownFlag(long row , long col);
 
-    public native long getCountRows();
+    public native boolean getFlag(long row, long col);
 
-    public native long getCountCols();
+    public native long getRows();
 
-    // public native long getCountCells();
+    public native long getCols();
 
-    public native long getCountEmpty();
+    public native long getCells();
 
-    public native long getCountEmptyOpen();
+    public native long getEmpty();
 
-    public native long getCountEmptyClose();
+    public native long getEmptyOpen();
 
-    public native byte getPercentVictory();
+    public native long getEmptyClose();
 
-    public native boolean isLive();
+    public native float getVictoryPerfect();
 
-    public native boolean isVictory();
+    public native boolean getLive();
 
-    public native boolean open(long row, long col);
+    public native boolean getVictory();
 
-    public native boolean isOpen(long row, long col);
+    public native void setOpen(long row, long col);
+
+    public native boolean getOpen(long row, long col);
 
     private native void destroy();
 }

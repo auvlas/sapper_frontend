@@ -57,10 +57,10 @@
                 android:layout_height="64dp"
                 android:textSize="27sp"
                 android:gravity="start|center"
-                android:text="@string/count_rows"/>
+                android:text="@string/rows"/>
 
             <com.shawnlin.numberpicker.NumberPicker
-                android:id="@+id/count_rows"
+                android:id="@+id/rows"
                 android:layout_width="wrap_content"
                 android:layout_height="64dp"
                 android:textSize="27sp"
@@ -82,10 +82,10 @@
                 android:layout_height="64dp"
                 android:textSize="27sp"
                 android:gravity="start|center"
-                android:text="@string/count_columns"/>
+                android:text="@string/columns"/>
 
             <com.shawnlin.numberpicker.NumberPicker
-                android:id="@+id/count_columns"
+                android:id="@+id/columns"
                 android:layout_width="wrap_content"
                 android:layout_height="64dp"
                 android:textSize="27sp"
@@ -107,10 +107,10 @@
                 android:layout_height="64dp"
                 android:textSize="27sp"
                 android:gravity="start|center"
-                android:text="@string/count_mins"/>
+                android:text="@string/mins"/>
 
             <com.shawnlin.numberpicker.NumberPicker
-                android:id="@+id/count_mins"
+                android:id="@+id/mins"
                 android:layout_width="wrap_content"
                 android:layout_height="64dp"
                 android:textSize="27sp"
@@ -120,7 +120,7 @@
                 app:np_dividerColor="@color/picker_divider_color"
                 app:np_min="0"
                 app:np_max="10000"
-                app:np_value="10"
+                app:np_value="1"
                 app:np_width="200dp"
                 app:np_textSize="15sp"
                 app:np_scrollerEnabled="true"
@@ -146,6 +146,31 @@
                 app:np_min="0"
                 app:np_max="1000"
                 app:np_value="0"
+                app:np_width="200dp"
+                app:np_textSize="15sp"
+                app:np_scrollerEnabled="true"
+                app:np_selectedTextSize="20sp"/>
+
+            <TextView
+                android:layout_columnWeight="1"
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:textSize="27sp"
+                android:gravity="start|center"
+                android:text="@string/radius_cells"/>
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/radius_cells"
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:textSize="27sp"
+                app:np_orientation="horizontal"
+                app:np_textColor="@color/picker_text_color"
+                app:np_selectedTextColor="@color/picker_selected_text_color"
+                app:np_dividerColor="@color/picker_divider_color"
+                app:np_min="0"
+                app:np_max="100"
+                app:np_value="1"
                 app:np_width="200dp"
                 app:np_textSize="15sp"
                 app:np_scrollerEnabled="true"

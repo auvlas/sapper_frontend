@@ -1,6 +1,7 @@
 package com.example.sapper;
 
 import static android.view.MotionEvent.*;
+import static com.example.sapper.Grid.Scale.*;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.TypedValueCompat;
@@ -16,8 +17,8 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
-public class Field extends View implements ScaleGestureDetector.OnScaleGestureListener {
-    private MinsField m_minsField = null;
+public class Grid extends View implements ScaleGestureDetector.OnScaleGestureListener {
+    private Map m_map = null;
     private int m_scrollLimitWidth = dpToPx(200);
     private int m_scrollLimitHeight = dpToPx(200);
     private int m_shiftHeight = dpToPx(100);
@@ -41,9 +42,20 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     private final ScaleGestureDetector m_scaleGestureDetector =
             new ScaleGestureDetector(this.getContext(), this);
     private int m_scaleFactor = 0x28888888;
+    private Scale m_scaleWidth = null;
+    private Scale m_scaleHeight = null;
 
+    enum Scale {
+        SMALL, BIG
+    }
 
-    public Field(Context context, AttributeSet attrs) {
+    interface Map {
+        public long getCols();
+
+        public long getRows();
+    }
+
+    public Grid(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         m_paint.setColor(0xffffffff);
@@ -58,6 +70,14 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     public void setMaxWidthCell(int dp) {
         m_maxWidthCell = dpToPx(dp);
         postInvalidateOnAnimation();
+    }
+
+    public long getCols() {
+        return null != m_map ? m_map.getCols() : 0;
+    }
+
+    public long getRows() {
+        return null != m_map ? m_map.getRows() : 0;
     }
 
     public int getMaxHeightCell() {
@@ -76,6 +96,25 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     public void setMaxStrokeWidth(int dp) {
         m_maxStrokeWidth = dpToPx(dp);
         postInvalidateOnAnimation();
+    }
+
+    private int getWidthCell(int strokeWidth) {
+        return m_widthCell + strokeWidth;
+    }
+
+    public int getWidthCell() {
+        return getWidthCell(getStrokeWidth());
+    }
+
+    private int getHeightCell(int strokeWidth) {
+        return m_heightCell + strokeWidth;
+    }
+    public int getHeightCell() {
+        return getHeightCell(getStrokeWidth());
+    }
+
+    public int getStrokeWidth() {
+        return (int) m_paint.getStrokeWidth();
     }
 
     public int getMinWidthCell() {
@@ -169,16 +208,12 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         postInvalidateOnAnimation();
     }
 
-    public int getStrokeWidth() {
-        return (int) m_paint.getStrokeWidth();
+    public Map getMinsField() {
+        return m_map;
     }
 
-    public MinsField getMinsField() {
-        return m_minsField;
-    }
-
-    public void setMinsField(MinsField field) {
-        m_minsField = field;
+    public void setMinsField(Map map) {
+        m_map = map;
 
         m_offsetLeft = 0;
         m_offsetTop = 0;
@@ -223,6 +258,69 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     public void onScaleEnd(@NonNull ScaleGestureDetector detector) {
     }
 
+    private long getFieldWidthEnd(long widthFieldRow, int halfStrokeWidth, int spaceWidth) {
+        return widthFieldRow + halfStrokeWidth + spaceWidth;
+    }
+
+    public long getFieldHeightEnd(long heightFieldRow, int halfStrokeWidth, int spaceHeight) {
+        return heightFieldRow + halfStrokeWidth + spaceHeight;
+    }
+
+    public int getSpaceWidth() {
+        return m_scrollLimitWidth + m_shiftWidth;
+    }
+
+    public int getSpaceHeight() {
+        return m_scrollLimitHeight + m_shiftHeight;
+    }
+
+    private int getHalfStrokeWidth(int strokeWidth) {
+        return strokeWidth / 2;
+    }
+
+    public int getHalfStrokeWidth() {
+        return getHalfStrokeWidth(getStrokeWidth());
+    }
+
+    private long getWidthFieldRaw(long cols, int widthCell) {
+        return cols * widthCell;
+    }
+
+    public long getWidthFieldRaw() {
+        return getWidthFieldRaw(getCols(), getWidthCell());
+    }
+
+    private long getWidthField(long widthFieldRow, int strokeWidth) {
+        return widthFieldRow + strokeWidth;
+    }
+
+    public long getWidthField() {
+        return getWidthField(getWidthFieldRaw(), getStrokeWidth());
+    }
+
+    private long getHeightFieldRaw(long rows, int heightCell) {
+        return rows * heightCell;
+    }
+
+    public long getHeightFieldRaw() {
+        return getHeightFieldRaw(getRows(), getHeightCell());
+    }
+
+    private long getHeightField(long heightFieldRow, int strokeWidth) {
+        return heightFieldRow + strokeWidth;
+    }
+
+    public long getHeightField() {
+        return getWidthField(getHeightFieldRaw(), getStrokeWidth());
+    }
+
+    private void updateScale(long widthField, int width) {
+        m_scaleWidth = widthField + (m_shiftWidth * 2L) > width ? BIG : SMALL;
+    }
+
+    protected void updateScale() {
+        updateScale(getWidthField(), getWidth());
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -232,10 +330,8 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         int widthCell = m_widthCell + strokeWidth;
         int heightCell = m_heightCell + strokeWidth;
 
-        long widthField = (m_minsField != null ? m_minsField.getCountCols() : 0)
-                * widthCell + strokeWidth;
-        long heightField = (m_minsField != null ? m_minsField.getCountRows() : 0)
-                * heightCell + strokeWidth;
+        long widthField = getCols() * widthCell + strokeWidth;
+        long heightField = getRows() * heightCell + strokeWidth;
 
         int width = getWidth();
         int height = getHeight();
@@ -367,8 +463,8 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     }
 
     private void centeringWidthSmallBottom(int timeDistance, int width, long widthField) {
-        m_offsetLeft =m_offsetLeftLastPressDown - timeDistance;
-        if (m_offsetLeft <= width - widthField -m_shiftWidth +m_scrollLimitWidth) {
+        m_offsetLeft = m_offsetLeftLastPressDown - timeDistance;
+        if (m_offsetLeft <= width - widthField - m_shiftWidth + m_scrollLimitWidth) {
             m_offsetLeft = width - widthField - m_shiftWidth + m_scrollLimitWidth;
             centeringStopWidth();
             m_offsetLeftLastPressDown = -1;
@@ -376,6 +472,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
             postInvalidateOnAnimation();
         }
     }
+
     private void centeringWidthSmall(int timeDistance, int width, long widthField, int offsetWidth) {
         if (m_offsetLeft < offsetWidth) {
             centeringWidthSmallTop(timeDistance, offsetWidth);
@@ -387,12 +484,15 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         }
     }
 
-    private void centeringWidth(int timeDistance, boolean isBigWidth,
-                                int width, long widthField, int offsetWidth, long fieldWidthEnd) {
-        if (isBigWidth) {
-            centeringWidthBig(timeDistance, width, fieldWidthEnd);
-        } else {
-            centeringWidthSmall(timeDistance, width, widthField, offsetWidth);
+    private void centeringWidth(int timeDistance, int width, long widthField,
+                                int offsetWidth, long fieldWidthEnd) {
+        switch (m_scaleWidth) {
+            case BIG:
+                centeringWidthBig(timeDistance, width, fieldWidthEnd);
+                break;
+            case SMALL:
+                centeringWidthSmall(timeDistance, width, widthField, offsetWidth);
+                break;
         }
     }
 
@@ -441,7 +541,7 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     }
 
     private void centeringHeightSmallBottom(int timeDistance, int height, long heightField) {
-        m_offsetTop =m_offsetTopLastPressDown - timeDistance;
+        m_offsetTop = m_offsetTopLastPressDown - timeDistance;
         if (m_offsetTop <= height - heightField - m_shiftHeight + m_scrollLimitHeight) {
             m_offsetTop = height - heightField - m_shiftHeight + m_scrollLimitHeight;
             centeringStopHeight();
@@ -460,36 +560,116 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         }
     }
 
-    private void centeringHeight(int timeDistance, boolean isBigHeight,
-                                 int height, long heightField, int offsetHeight, long fieldHeightEnd) {
-        if (isBigHeight) {
-            centeringHeightBig(timeDistance, height, fieldHeightEnd);
-        } else {
-            centeringHeightSmall(timeDistance, height, heightField, offsetHeight);
+    private void centeringHeight(int timeDistance, int height, long heightField,
+                                 int offsetHeight, long fieldHeightEnd) {
+        switch (m_scaleHeight) {
+            case BIG:
+                centeringHeightBig(timeDistance, height, fieldHeightEnd);
+                break;
+            case SMALL:
+                centeringHeightSmall(timeDistance, height, heightField, offsetHeight);
+                break;
         }
     }
 
-    private void centeringForce(boolean isBigWidth, boolean isBigHeight, int width, int height,
-                              long widthField, long heightField, int offsetWidth,
-                              int offsetHeight, long fieldWidthEnd, long fieldHeightEnd) {
+    private void centeringForce(int width, int height,
+                                long widthField, long heightField, int offsetWidth,
+                                int offsetHeight, long fieldWidthEnd, long fieldHeightEnd) {
         int timeDistance = timeDistance();
 
         if (-1 != m_offsetLeftLastPressDown) {
-            centeringWidth(timeDistance, isBigWidth, width, widthField, offsetWidth, fieldWidthEnd);
+            centeringWidth(timeDistance, width, widthField, offsetWidth, fieldWidthEnd);
         }
 
         if (-1 != m_offsetTopLastPressDown) {
-            centeringHeight(timeDistance, isBigHeight, height, heightField, offsetHeight, fieldHeightEnd);
+            centeringHeight(timeDistance, height, heightField, offsetHeight, fieldHeightEnd);
         }
     }
 
-    private void centeringNormally(boolean isBigWidth, boolean isBigHeight, int width, int height,
-                           long widthField, long heightField, int offsetWidth,
-                           int offsetHeight, long fieldWidthEnd, long fieldHeightEnd) {
+    private void centeringNormally(int width, int height,
+                                   long widthField, long heightField, int offsetWidth,
+                                   int offsetHeight, long fieldWidthEnd, long fieldHeightEnd) {
         if (0 != m_timeLastPressDown) {
-            centeringForce(isBigWidth, isBigHeight, width, height,
-                    widthField, heightField, offsetWidth,
+            centeringForce(width, height, widthField, heightField, offsetWidth,
                     offsetHeight, fieldWidthEnd, fieldHeightEnd);
+        }
+    }
+
+    private int startX(int widthCell, int offsetWidth, int halfStrokeWidth) {
+        return switch (m_scaleWidth) {
+            case BIG -> {
+                yield m_offsetLeft > offsetWidth ?
+                        (int) (-((m_offsetLeft - offsetWidth - halfStrokeWidth)
+                                % widthCell)) - halfStrokeWidth :
+                        (int) (offsetWidth - m_offsetLeft);
+            }
+            case SMALL -> {
+                yield (int) m_offsetLeft - m_scrollLimitWidth - halfStrokeWidth;
+            }
+            default -> 0;
+        };
+    }
+
+    private int stopX(int startX, int width, long widthFieldRow, long fieldWidthEnd,
+                      int strokeWidth, int halfStrokeWidth) {
+        return switch (m_scaleWidth) {
+            case BIG -> {
+                yield (width < fieldWidthEnd - m_offsetLeft ?
+                        width : (int) (fieldWidthEnd - m_offsetLeft)) + halfStrokeWidth;
+            }
+            case SMALL -> {
+                yield startX + (int) widthFieldRow + strokeWidth;
+            }
+            default -> 0;
+        };
+    }
+
+    private int startY(int heightCell, int offsetHeight, int halfStrokeWidth) {
+        return switch (m_scaleHeight) {
+            case BIG -> {
+                yield m_offsetTop > offsetHeight ?
+                        (int) (-((m_offsetTop - offsetHeight - halfStrokeWidth)
+                                % heightCell)) - halfStrokeWidth :
+                        (int) (offsetHeight - m_offsetTop);
+            }
+            case SMALL -> {
+                yield (int) m_offsetTop - m_scrollLimitHeight - halfStrokeWidth;
+            }
+            default -> 0;
+        };
+    }
+
+    private int stopY(int startY, int height, long heightFieldRow, long fieldHeightEnd,
+                      int strokeWidth, int halfStrokeWidth) {
+        return switch (m_scaleHeight) {
+            case BIG -> {
+                yield (height < fieldHeightEnd - m_offsetTop ?
+                        height : (int) (fieldHeightEnd - m_offsetTop)) + halfStrokeWidth;
+            }
+            case SMALL -> {
+                yield startY + (int) heightFieldRow + strokeWidth;
+            }
+            default -> 0;
+        };
+    }
+
+    protected void drawWidth(Canvas canvas, int startX, int stopX, int startY, int stopY,
+                             int widthCell, int halfStrokeWidth) {
+        int startYStroke = startY - halfStrokeWidth;
+        int stopYStroke = stopY - halfStrokeWidth;
+
+        for (int x = startX; x <= stopX; x += widthCell) {
+            canvas.drawLine(x, startYStroke, x, stopYStroke, m_paint);
+        }
+    }
+
+    protected void drawHeight(Canvas canvas, int startX, int stopX, int startY, int stopY,
+                              int heightCell, int halfStrokeWidth) {
+        int startXStroke = startX - halfStrokeWidth;
+        int stopXStroke = stopX - halfStrokeWidth;
+
+        for (int y = startY; y <= stopY; y += heightCell) {
+            canvas.drawLine(startXStroke, y, stopXStroke, y, m_paint);
         }
     }
 
@@ -499,93 +679,51 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
 
         Log.d("onDrawTop", String.valueOf(m_offsetTop));
 
-        if (m_minsField == null) {
+        if (m_map == null) {
             return;
         }
 
-        long rows = m_minsField.getCountRows();
-        long cols = m_minsField.getCountCols();
+        long cols = getCols();
+        long rows = getRows();
 
         if (rows == 0 || cols == 0) {
             return;
         }
 
         int strokeWidth = getStrokeWidth();
-        int halfStrokeWidth = strokeWidth / 2;
+        int halfStrokeWidth = getHalfStrokeWidth(strokeWidth);
 
-        int offsetWidth = m_scrollLimitWidth + m_shiftWidth;
-        int offsetHeight = m_scrollLimitHeight + m_shiftHeight;
+        int spaceWidth = getSpaceWidth();
+        int spaceHeight = getSpaceHeight();
 
-        int widthCell = m_widthCell + strokeWidth;
-        int heightCell = m_heightCell + strokeWidth;
+        int widthCell = getWidthCell(strokeWidth);
+        int heightCell = getHeightCell(strokeWidth);
 
-        long widthFieldRow = cols * widthCell;
-        long heightFieldRow = rows * heightCell;
+        long widthFieldRow = getWidthFieldRaw(cols, widthCell);
+        long heightFieldRow = getHeightFieldRaw(rows, heightCell);
 
-        long widthField = widthFieldRow + strokeWidth;
-        long heightField = heightFieldRow + strokeWidth;
+        long widthField = getWidthField(widthFieldRow, strokeWidth);
+        long heightField = getHeightField(heightFieldRow, strokeWidth);
 
-        long fieldWidthEnd = widthFieldRow + halfStrokeWidth + offsetWidth;
-        long fieldHeightEnd = heightFieldRow + halfStrokeWidth + offsetHeight;
+        long fieldWidthEnd = getFieldWidthEnd(widthFieldRow, halfStrokeWidth, spaceWidth);
+        long fieldHeightEnd = getFieldHeightEnd(heightFieldRow, halfStrokeWidth, spaceHeight);
 
         int width = getWidth();
         int height = getHeight();
 
-        boolean isBigWidth = widthField + (m_shiftWidth * 2L) > width;
-        boolean isBigHeight = heightField + (m_shiftHeight * 2L) > height;
-
-        centeringNormally(isBigWidth, isBigHeight, width, height,
-                widthField, heightField, offsetWidth,
-                offsetHeight, fieldWidthEnd, fieldHeightEnd);
+        centeringNormally(width, height, widthField, heightField, spaceWidth,
+                spaceHeight, fieldWidthEnd, fieldHeightEnd);
 
 
-        int startX = 0;
-        int stopX = 0;
+        int startX = startX(widthCell, spaceWidth, halfStrokeWidth);
+        int stopX = stopX(startX, width, widthFieldRow, fieldWidthEnd,
+                strokeWidth, halfStrokeWidth);
 
-        if (isBigWidth) {
-            startX = m_offsetLeft > offsetWidth ?
-                    (int) (-((m_offsetLeft - offsetWidth - halfStrokeWidth)
-                            % widthCell)) - halfStrokeWidth :
-                    (int) (offsetWidth - m_offsetLeft);
+        int startY = startY(heightCell, spaceHeight, halfStrokeWidth);
+        int stopY = stopY(startY, height, heightFieldRow, fieldHeightEnd,
+                strokeWidth, halfStrokeWidth);
 
-            stopX = (width < fieldWidthEnd - m_offsetLeft ?
-                    width : (int) (fieldWidthEnd - m_offsetLeft)) + halfStrokeWidth;
-        } else {
-            startX = (int) m_offsetLeft - m_scrollLimitWidth - halfStrokeWidth;
-
-            stopX = startX + (int) widthFieldRow + strokeWidth;
-        }
-
-
-        int startY = 0;
-        int stopY = 0;
-
-        if (isBigHeight) {
-            startY = m_offsetTop > offsetHeight ?
-                    (int) (-((m_offsetTop - offsetHeight - halfStrokeWidth)
-                            % heightCell)) - halfStrokeWidth :
-                    (int) (offsetHeight - m_offsetTop);
-
-            stopY = (height < fieldHeightEnd - m_offsetTop ?
-                    height : (int) (fieldHeightEnd - m_offsetTop)) + halfStrokeWidth;
-        } else {
-            startY =  (int) m_offsetTop - m_scrollLimitHeight - halfStrokeWidth;
-
-            stopY = startY + (int) heightFieldRow + strokeWidth;
-        }
-
-
-        int startXStroke = startX - halfStrokeWidth;
-        int startYStroke = startY - halfStrokeWidth;
-        int stopXStroke = stopX - halfStrokeWidth;
-        int stopYStroke = stopY - halfStrokeWidth;
-
-        for (int x = startX; x <= stopX; x += widthCell) {
-            canvas.drawLine(x, startYStroke, x, stopYStroke, m_paint);
-        }
-
-        for (int y = startY; y <= stopY; y += heightCell) {
-            canvas.drawLine(startXStroke, y, stopXStroke, y, m_paint);
-        }
+        drawWidth(canvas, startX, stopX, startY, stopY, widthCell, halfStrokeWidth);
+        drawHeight(canvas, startX, stopX, startY, stopY, heightCell, halfStrokeWidth);
     }
 }

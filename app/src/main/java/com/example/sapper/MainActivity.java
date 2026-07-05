@@ -27,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        m_rows = findViewById(R.id.count_rows);
+        m_rows = findViewById(R.id.rows);
 
-        m_columns = findViewById(R.id.count_columns);
-        m_mins = findViewById(R.id.count_mins);
+        m_columns = findViewById(R.id.columns);
+        m_mins = findViewById(R.id.mins);
         m_show_seconds = findViewById(R.id.show_seconds);
 
         Button startGame = findViewById(R.id.start_game_button);
@@ -40,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickStartGame(View view) {
         Intent intent = new Intent(this, Game.class);
-        intent.putExtra("count_rows", (long) m_rows.getValue());
-        intent.putExtra("count_columns", (long) m_columns.getValue());
-        intent.putExtra("count_mins", (long) m_mins.getValue());
-        intent.putExtra("count_show_seconds", (long) m_show_seconds.getValue());
+        intent.putExtra("rows", (long) m_rows.getValue());
+        intent.putExtra("columns", (long) m_columns.getValue());
+        intent.putExtra("mins", (long) m_mins.getValue());
+        intent.putExtra("radius_", (long) m_show_seconds.getValue());
+        intent.putExtra("show_seconds", (long) m_show_seconds.getValue());
 
         startActivity(intent);
     }

@@ -43,7 +43,39 @@
         android:layout_weight="8" />
 
     <LinearLayout
-        android:id="@+id/information_layout"
+        android:id="@+id/information_layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/rows"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/columns"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/mins"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/information_layout_values_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -54,7 +86,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/count_rows"
+            android:text="@string/default_value"
             android:textSize="20sp"/>
 
         <TextView
@@ -63,7 +95,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/count_columns"
+            android:text="@string/default_value"
             android:textSize="20sp"/>
 
         <TextView
@@ -72,18 +104,43 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/count_mins"
+            android:text="@string/default_value"
             android:textSize="20sp"/>
+
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/information_layout_values"
+        android:id="@+id/information_layout_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/count_rows"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/show_seconds"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/radius_cells"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/information_layout_values_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/show_seconds"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -92,7 +149,7 @@
             android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/count_columns"
+            android:id="@+id/radius_cells"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -100,14 +157,6 @@
             android:text="@string/default_value"
             android:textSize="20sp"/>
 
-        <TextView
-            android:id="@+id/count_mins"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/default_value"
-            android:textSize="20sp"/>
     </LinearLayout>
 
     <Space
