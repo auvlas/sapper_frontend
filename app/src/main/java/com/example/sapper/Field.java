@@ -22,8 +22,8 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
     private int m_scrollLimitHeight = dpToPx(200);
     private int m_shiftHeight = dpToPx(100);
     private int m_shiftWidth = dpToPx(100);
-    private long m_offsetTop = m_scrollLimitWidth;
-    private long m_offsetLeft = m_scrollLimitHeight;
+    private long m_offsetTop = 0;
+    private long m_offsetLeft = 0;
     private final Paint m_paint = new Paint();
     private int m_maxWidthCell = dpToPx(200);
     private int m_maxHeightCell = dpToPx(200);
@@ -178,6 +178,15 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
 
     public void setMinsField(MinsField field) {
         m_minsField = field;
+
+        m_offsetLeft = 0;
+        m_offsetTop = 0;
+
+        m_offsetLeftLastPressDown = 0;
+        m_offsetTopLastPressDown = 0;
+
+        m_timeLastPressDown = System.currentTimeMillis();
+
         postInvalidateOnAnimation();
     }
 
@@ -262,11 +271,11 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
 
                 m_offsetLeft = Math.max(0L, Math.min((long) (m_offsetLeft + deltaX),
                         widthField + (m_shiftWidth * 2L) > width ?
-                                widthField + totalShiftX : width + m_scrollLimitWidth * 2L));
+                                widthField + totalShiftX : width + m_scrollLimitWidth));
 
                 m_offsetTop = Math.max(0L, Math.min((long) (m_offsetTop + deltaY),
                         heightField + (m_shiftHeight * 2L) > height ?
-                                heightField + totalShiftY : height + m_scrollLimitHeight * 2L));
+                                heightField + totalShiftY : height + m_scrollLimitHeight));
 
                 if (m_lastX != curX || m_lastY != curY) {
                     postInvalidateOnAnimation();
@@ -341,39 +350,28 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
         int width = getWidth();
         int height = getHeight();
 
-        /*
         if (0 != m_timeLastPressDown) {
             int deltaTime = (int) (System.currentTimeMillis() - m_timeLastPressDown);
-            int timeDistance = dpToPx(1) * deltaTime;
+            int timeDistance = dpToPx(1) * (deltaTime / 4);
 
             if (-1 != m_offsetLeftLastPressDown) {
-                if (m_offsetLeft < m_scrollLimitWidth) {
+                if (m_offsetLeft < offsetWidth) {
                     m_offsetLeft = m_offsetLeftLastPressDown + timeDistance;
-                    if (m_offsetLeft >= m_scrollLimitWidth) {
-                        m_offsetLeft = m_scrollLimitWidth;
+                    if (m_offsetLeft >= offsetWidth) {
+                        m_offsetLeft = offsetWidth;
                         m_offsetLeftLastPressDown = -1;
                     } else {
                         postInvalidateOnAnimation();
                     }
-                } else if (widthField + (m_shiftWidth * 2L) > width) {
-                     if (m_offsetLeft > widthEnd + m_shiftWidth - width) {
+                } else if (widthField + (m_shiftWidth * 2L) <= width) {
+                    if (m_offsetLeft > width - widthField - m_shiftWidth + m_scrollLimitWidth) {
                         m_offsetLeft = m_offsetLeftLastPressDown - timeDistance;
-                        if (m_offsetLeft <= widthEnd + m_shiftWidth - width) {
-                            m_offsetLeft = widthEnd + m_shiftWidth - width;
+                        if (m_offsetLeft <= width - widthField - m_shiftWidth + m_scrollLimitWidth) {
+                            m_offsetLeft = width - widthField - m_shiftWidth + m_scrollLimitWidth;
                             m_offsetLeftLastPressDown = -1;
                         } else {
                             postInvalidateOnAnimation();
                         }
-                    } else if (m_scrollLimitWidth + width - m_shiftWidth < m_offsetLeft + widthField + m_shiftWidth * 2L) {
-                         m_offsetLeft = m_offsetLeftLastPressDown - timeDistance;
-                         if (m_scrollLimitWidth + width - m_shiftWidth >= m_offsetLeft + widthField + m_shiftWidth * 2L) {
-                             m_offsetLeft = m_scrollLimitWidth + width - m_shiftWidth;
-                             m_offsetLeftLastPressDown = -1;
-                         } else {
-                             postInvalidateOnAnimation();
-                         }
-                    } else {
-                        m_offsetLeftLastPressDown = -1;
                     }
                 } else {
                     m_offsetLeftLastPressDown = -1;
@@ -381,40 +379,29 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
             }
 
             if (-1 != m_offsetTopLastPressDown) {
-                if (m_offsetTop < m_scrollLimitHeight) {
+                if (m_offsetTop < offsetHeight) {
                     m_offsetTop = m_offsetTopLastPressDown + timeDistance;
-                    if (m_offsetTop >= m_scrollLimitHeight) {
-                        m_offsetTop = m_scrollLimitHeight;
+                    if (m_offsetTop >= offsetHeight) {
+                        m_offsetTop = offsetHeight;
                         m_offsetTopLastPressDown = -1;
                     } else {
                         postInvalidateOnAnimation();
                     }
-                } else if (heightField + (m_shiftHeight * 2L) > height) {
-                    if (m_offsetTop > heightEnd + m_shiftHeight - height) {
+                } else if (heightField + (m_shiftHeight * 2L) <= height) {
+                    if (m_offsetTop > height - heightField - m_shiftHeight + m_scrollLimitHeight) {
                         m_offsetTop = m_offsetTopLastPressDown - timeDistance;
-                        if (m_offsetTop <= heightEnd + m_shiftHeight - height) {
-                            m_offsetTop = heightEnd + m_shiftHeight - height;
+                        if (m_offsetTop <= height - heightField - m_shiftHeight + m_scrollLimitHeight) {
+                            m_offsetTop = height - heightField - m_shiftHeight + m_scrollLimitHeight;
                             m_offsetTopLastPressDown = -1;
                         } else {
                             postInvalidateOnAnimation();
                         }
-                    } else if (m_scrollLimitHeight + height - m_shiftHeight < m_offsetTop + heightField + m_shiftHeight * 2L) {
-                        m_offsetTop = m_offsetTopLastPressDown - timeDistance;
-                        if (m_scrollLimitHeight + height - m_shiftHeight >= m_offsetTop + heightField + m_shiftHeight * 2L) {
-                            m_offsetTop = m_scrollLimitHeight + height - m_shiftHeight;
-                            m_offsetTopLastPressDown = -1;
-                        } else {
-                            postInvalidateOnAnimation();
-                        }
-                    } else {
-                        m_offsetTopLastPressDown = -1;
                     }
                 } else {
                     m_offsetTopLastPressDown = -1;
                 }
             }
         }
-        */
 
 
         int startX = 0;
@@ -422,12 +409,12 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
 
         if (widthField + (m_shiftWidth * 2L) > width) {
             startX = (int) (m_offsetLeft < offsetWidth
-                    ? m_offsetLeft - offsetWidth - halfStrokeWidth
+                    ? m_offsetLeft - halfStrokeWidth
                     : ((m_offsetLeft - halfStrokeWidth) % widthCell) - widthCell);
 
             stopX = (int) Math.min(width + halfStrokeWidth, startX + widthField);
         } else {
-            startX = (int) m_offsetLeft - m_scrollLimitWidth + m_shiftWidth - halfStrokeWidth;
+            startX = (int) m_offsetLeft - m_scrollLimitWidth - halfStrokeWidth;
 
             stopX = startX + (int) widthFieldRow + strokeWidth;
         }
@@ -438,12 +425,12 @@ public class Field extends View implements ScaleGestureDetector.OnScaleGestureLi
 
         if (heightField + (m_shiftHeight * 2L) > height) {
             startY = (int) (m_offsetTop < offsetHeight
-                    ? m_offsetTop - offsetHeight - halfStrokeWidth
+                    ? m_offsetTop - halfStrokeWidth
                     : ((m_offsetTop - halfStrokeWidth) % heightCell) - heightCell);
 
             stopY = (int) Math.min(height + halfStrokeWidth, startY + heightField);
         } else {
-            startY = (int) m_offsetTop - m_scrollLimitHeight + m_shiftHeight - halfStrokeWidth;
+            startY =  (int) m_offsetTop - m_scrollLimitHeight - halfStrokeWidth;
 
             stopY = startY + (int) heightFieldRow + strokeWidth;
         }
