@@ -30,9 +30,9 @@ public class MinsField implements Grid.Map, AutoCloseable {
 
     public native boolean getMin(long row, long col);
 
-    public native void setUpFlag(long row , long col);
+    public native void setUpFlag(long row, long col);
 
-    public native void setDownFlag(long row , long col);
+    public native void setDownFlag(long row, long col);
 
     public native boolean getFlag(long row, long col);
 
@@ -44,11 +44,11 @@ public class MinsField implements Grid.Map, AutoCloseable {
 
     public native long getEmpty();
 
-    public native long getEmptyOpen();
+    public native long getOpen();
 
     public native long getEmptyClose();
 
-    public native float getVictoryPerfect();
+    public native double getVictoryPerfect();
 
     public native boolean getLive();
 

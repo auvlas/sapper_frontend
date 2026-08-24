@@ -38,7 +38,7 @@ public class Game extends AppCompatActivity {
 
         m_binding.radiusCells.setText(R.string.radius_cells);
 
-        m_binding.field.setMinsField(m_field);
+        m_binding.field.setMap(m_field);
     }
 
     protected void endGame(Class<?> cls) {

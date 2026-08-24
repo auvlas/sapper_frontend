@@ -55,12 +55,16 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
         public long getRows();
     }
 
+    public Grid(Context context, AttributeSet attrs, Map map) {
+        this(context, attrs);
+
+        setMap(map);
+    }
+
     public Grid(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         m_paint.setColor(0xffffffff);
-
-        normalizeScale();
     }
 
     public int getMaxWidthCell() {
@@ -109,6 +113,7 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
     private int getHeightCell(int strokeWidth) {
         return m_heightCell + strokeWidth;
     }
+
     public int getHeightCell() {
         return getHeightCell(getStrokeWidth());
     }
@@ -208,11 +213,11 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
         postInvalidateOnAnimation();
     }
 
-    public Map getMinsField() {
+    public Map getMap() {
         return m_map;
     }
 
-    public void setMinsField(Map map) {
+    public void setMap(Map map) {
         m_map = map;
 
         m_offsetLeft = 0;
@@ -223,6 +228,7 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
 
         m_timeLastPressDown = System.currentTimeMillis();
 
+        normalizeScale();
         postInvalidateOnAnimation();
     }
 
@@ -236,6 +242,8 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
         m_heightCell = m_minHeightCell + (m_scaleFactor / (0x7fffffff / deltaHeightCell));
         m_paint.setStrokeWidth((float) (m_minStrokeWidth +
                 (m_scaleFactor / (0x7fffffff / deltaStrokeWidth))));
+
+        updateScale();
     }
 
     @Override
@@ -313,13 +321,30 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
     public long getHeightField() {
         return getWidthField(getHeightFieldRaw(), getStrokeWidth());
     }
-
-    private void updateScale(long widthField, int width) {
+    private void updateScaleWidth(long widthField, int width) {
         m_scaleWidth = widthField + (m_shiftWidth * 2L) > width ? BIG : SMALL;
     }
 
+    private void updateScaleHeight(long heightField, int height) {
+        m_scaleHeight = heightField + (m_shiftHeight * 2L) > height ? BIG : SMALL;
+    }
+
+    protected void updateScaleWidth() {
+        updateScaleWidth(getWidthField(), getWidth());
+    }
+
+    protected void updateScaleHeight() {
+        updateScaleHeight(getHeightField(), getHeight());
+    }
+
+    private void updateScale(long widthField, int width, long heightField, int height) {
+        updateScaleWidth(widthField, width);
+        updateScaleHeight(heightField, height);
+    }
+
     protected void updateScale() {
-        updateScale(getWidthField(), getWidth());
+        updateScaleWidth();
+        updateScaleHeight();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -366,11 +391,11 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
                 int totalShiftX = (m_shiftWidth + m_scrollLimitWidth) << 1;
                 int totalShiftY = (m_shiftHeight + m_scrollLimitHeight) << 1;
 
-                m_offsetLeft = Math.max(0L, Math.min((long) (m_offsetLeft + deltaX),
+                m_offsetLeft = Math.max(0L, Math.min((long) (m_offsetLeft - deltaX),
                         widthField + (m_shiftWidth * 2L) > width ?
                                 widthField + totalShiftX : width + m_scrollLimitWidth));
 
-                m_offsetTop = Math.max(0L, Math.min((long) (m_offsetTop + deltaY),
+                m_offsetTop = Math.max(0L, Math.min((long) (m_offsetTop - deltaY),
                         heightField + (m_shiftHeight * 2L) > height ?
                                 heightField + totalShiftY : height + m_scrollLimitHeight));
 
@@ -434,7 +459,6 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
         if (m_offsetLeft <= fieldWidthEnd + m_shiftWidth - width) {
             m_offsetLeft = fieldWidthEnd + m_shiftWidth - width;
             centeringStopWidth();
-            m_offsetLeftLastPressDown = -1;
         } else {
             postInvalidateOnAnimation();
         }
@@ -447,51 +471,47 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
             centeringWidthBigBottom(timeDistance, width, fieldWidthEnd);
         } else {
             centeringStopWidth();
-            m_offsetLeftLastPressDown = -1;
         }
     }
 
     private void centeringWidthSmallTop(int timeDistance, int offsetWidth) {
         m_offsetLeft = m_offsetLeftLastPressDown + timeDistance;
-        if (m_offsetLeft >= offsetWidth) {
-            m_offsetLeft = offsetWidth;
+        if (offsetWidth >= m_scrollLimitWidth) {
+            m_offsetLeft = m_scrollLimitWidth;
             centeringStopWidth();
-            m_offsetLeftLastPressDown = -1;
         } else {
             postInvalidateOnAnimation();
         }
     }
 
-    private void centeringWidthSmallBottom(int timeDistance, int width, long widthField) {
+    private void centeringWidthSmallBottom(int timeDistance, int offsetWidth, int width) {
         m_offsetLeft = m_offsetLeftLastPressDown - timeDistance;
-        if (m_offsetLeft <= width - widthField - m_shiftWidth + m_scrollLimitWidth) {
-            m_offsetLeft = width - widthField - m_shiftWidth + m_scrollLimitWidth;
+        if (offsetWidth <= m_scrollLimitWidth + width) {
+            m_offsetLeft = m_scrollLimitWidth + width;
             centeringStopWidth();
-            m_offsetLeftLastPressDown = -1;
         } else {
             postInvalidateOnAnimation();
         }
     }
 
-    private void centeringWidthSmall(int timeDistance, int width, long widthField, int offsetWidth) {
-        if (m_offsetLeft < offsetWidth) {
+    private void centeringWidthSmall(int timeDistance, int width, int offsetWidth) {
+        if (offsetWidth < m_scrollLimitWidth) {
             centeringWidthSmallTop(timeDistance, offsetWidth);
-        } else if (m_offsetLeft > width - widthField - m_shiftWidth + m_scrollLimitWidth) {
-            centeringWidthSmallBottom(timeDistance, width, widthField);
+        } else if (offsetWidth > m_scrollLimitWidth + width) {
+            centeringWidthSmallBottom(timeDistance, offsetWidth, width);
         } else {
             centeringStopWidth();
-            m_offsetLeftLastPressDown = -1;
         }
     }
 
-    private void centeringWidth(int timeDistance, int width, long widthField,
+    private void centeringWidth(int timeDistance, int width,
                                 int offsetWidth, long fieldWidthEnd) {
         switch (m_scaleWidth) {
             case BIG:
                 centeringWidthBig(timeDistance, width, fieldWidthEnd);
                 break;
             case SMALL:
-                centeringWidthSmall(timeDistance, width, widthField, offsetWidth);
+                centeringWidthSmall(timeDistance, width, offsetWidth);
                 break;
         }
     }
@@ -540,57 +560,55 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
         }
     }
 
-    private void centeringHeightSmallBottom(int timeDistance, int height, long heightField) {
+    private void centeringHeightSmallBottom(int timeDistance, int offsetHeight, int height) {
         m_offsetTop = m_offsetTopLastPressDown - timeDistance;
-        if (m_offsetTop <= height - heightField - m_shiftHeight + m_scrollLimitHeight) {
-            m_offsetTop = height - heightField - m_shiftHeight + m_scrollLimitHeight;
+        if (offsetHeight <= m_scrollLimitHeight + height) {
+            m_offsetTop = m_scrollLimitHeight + height;
             centeringStopHeight();
         } else {
             postInvalidateOnAnimation();
         }
     }
 
-    private void centeringHeightSmall(int timeDistance, int height, long heightField, int offsetHeight) {
-        if (m_offsetTop < offsetHeight) {
+    private void centeringHeightSmall(int timeDistance, int height, int offsetHeight) {
+        if (offsetHeight < m_scrollLimitHeight) {
             centeringHeightSmallTop(timeDistance, offsetHeight);
-        } else if (m_offsetTop > height - heightField - m_shiftHeight + m_scrollLimitHeight) {
-            centeringHeightSmallBottom(timeDistance, height, heightField);
+        } else if (offsetHeight > m_scrollLimitHeight + height) {
+            centeringHeightSmallBottom(timeDistance, offsetHeight, height);
         } else {
             centeringStopHeight();
         }
     }
 
-    private void centeringHeight(int timeDistance, int height, long heightField,
+    private void centeringHeight(int timeDistance, int height,
                                  int offsetHeight, long fieldHeightEnd) {
         switch (m_scaleHeight) {
             case BIG:
                 centeringHeightBig(timeDistance, height, fieldHeightEnd);
                 break;
             case SMALL:
-                centeringHeightSmall(timeDistance, height, heightField, offsetHeight);
+                centeringHeightSmall(timeDistance, height, offsetHeight);
                 break;
         }
     }
 
-    private void centeringForce(int width, int height,
-                                long widthField, long heightField, int offsetWidth,
+    private void centeringForce(int width, int height, int offsetWidth,
                                 int offsetHeight, long fieldWidthEnd, long fieldHeightEnd) {
         int timeDistance = timeDistance();
 
         if (-1 != m_offsetLeftLastPressDown) {
-            centeringWidth(timeDistance, width, widthField, offsetWidth, fieldWidthEnd);
+            centeringWidth(timeDistance, width, offsetWidth, fieldWidthEnd);
         }
 
         if (-1 != m_offsetTopLastPressDown) {
-            centeringHeight(timeDistance, height, heightField, offsetHeight, fieldHeightEnd);
+            centeringHeight(timeDistance, height, offsetHeight, fieldHeightEnd);
         }
     }
 
-    private void centeringNormally(int width, int height,
-                                   long widthField, long heightField, int offsetWidth,
+    private void centeringNormally(int width, int height, int offsetWidth,
                                    int offsetHeight, long fieldWidthEnd, long fieldHeightEnd) {
         if (0 != m_timeLastPressDown) {
-            centeringForce(width, height, widthField, heightField, offsetWidth,
+            centeringForce(width, height, offsetWidth,
                     offsetHeight, fieldWidthEnd, fieldHeightEnd);
         }
     }
@@ -604,7 +622,7 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
                         (int) (offsetWidth - m_offsetLeft);
             }
             case SMALL -> {
-                yield (int) m_offsetLeft - m_scrollLimitWidth - halfStrokeWidth;
+                yield (int) (offsetWidth - m_offsetLeft) - halfStrokeWidth;
             }
             default -> 0;
         };
@@ -624,7 +642,7 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
         };
     }
 
-    private int startY(int heightCell, int offsetHeight, int halfStrokeWidth) {
+    private int startY(long height, int heightCell, int offsetHeight, int halfStrokeWidth) {
         return switch (m_scaleHeight) {
             case BIG -> {
                 yield m_offsetTop > offsetHeight ?
@@ -633,7 +651,7 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
                         (int) (offsetHeight - m_offsetTop);
             }
             case SMALL -> {
-                yield (int) m_offsetTop - m_scrollLimitHeight - halfStrokeWidth;
+                yield (int) (offsetHeight - m_offsetTop) - halfStrokeWidth;
             }
             default -> 0;
         };
@@ -711,7 +729,7 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
         int width = getWidth();
         int height = getHeight();
 
-        centeringNormally(width, height, widthField, heightField, spaceWidth,
+        centeringNormally(width, height, spaceWidth,
                 spaceHeight, fieldWidthEnd, fieldHeightEnd);
 
 
@@ -719,7 +737,7 @@ public class Grid extends View implements ScaleGestureDetector.OnScaleGestureLis
         int stopX = stopX(startX, width, widthFieldRow, fieldWidthEnd,
                 strokeWidth, halfStrokeWidth);
 
-        int startY = startY(heightCell, spaceHeight, halfStrokeWidth);
+        int startY = startY(height, heightCell, spaceHeight, halfStrokeWidth);
         int stopY = stopY(startY, height, heightFieldRow, fieldHeightEnd,
                 strokeWidth, halfStrokeWidth);
 
