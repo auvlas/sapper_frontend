@@ -56,7 +56,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("io.github.ShawnLin013:number-picker:2.4.13")
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("io.github.euptron:bidirectional-llm:0.1.0")
 }

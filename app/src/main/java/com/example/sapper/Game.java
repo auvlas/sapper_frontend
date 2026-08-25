@@ -9,13 +9,14 @@ import com.example.sapper.databinding.GameBinding;
 
 
 public class Game extends AppCompatActivity {
+    private GameBinding m_binding = null;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        GameBinding m_binding = GameBinding.inflate(getLayoutInflater());
+        m_binding = GameBinding.inflate(getLayoutInflater());
         setContentView(m_binding.getRoot());
 
         Intent intent = getIntent();

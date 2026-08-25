@@ -19,4 +19,8 @@
     <string name="flag">"🚩"</string>
     <string name="flag_finish">"🎌"</string>
     <string name="space">" "</string>
+    <string name="reset">"Сброс"</string>
+    <string name="minus">"-"</string>
+    <string name="plus">"+"</string>
+    <string name="random">"Рандом"</string>
 </resources>
