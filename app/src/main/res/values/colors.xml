@@ -5,14 +5,10 @@
     <color name="victory">#FF00FF00</color>
     <color name="defeat">#FFFF0000</color>
     <color name="accent">#80C7102B</color>
-    <color name="accent_border">#FFF0211A</color>
     <color name="cancel">#806C6E6B</color>
     <color name="info">#80C9DE28</color>
-    <color name="info_border">#FFD99011</color>
     <color name="function">#806041C4</color>
-    <color name="function_border">#FF6C6E6B</color>
     <color name="main">#20416FC4</color>
-    <color name="main_border">#FF6041C4</color>
     <color name="background_dark">#FF03031F</color>
     <color name="background_light">#FFBDBDF2</color>
 </resources>
