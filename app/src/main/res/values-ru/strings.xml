@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">"Сапер"</string>
+    <string name="app_name">"Сапёр"</string>
     <string name="free_cell">"Свободных ячеек: "</string>
-    <string name="begin_game">"СТАРТ!"</string>
-    <string name="rows">"строк: "</string>
-    <string name="columns">"колонок: "</string>
-    <string name="mins">"мин: "</string>
-    <string name="show_seconds">"показывать секунд: "</string>
-    <string name="radius_cells">"Радиус ячеек: "</string>
+    <string name="begin_game">"НАЧАТЬ!"</string>
+    <string name="height">"Высота"</string>
+    <string name="width">"Ширена"</string>
+    <string name="mins">"Мины"</string>
+    <string name="x_ray">"Рентген"</string>
+    <string name="radar">"Радар"</string>
     <string name="victory">"Победа"</string>
     <string name="defeat">"Поражение"</string>
     <string name="percent">"%"</string>

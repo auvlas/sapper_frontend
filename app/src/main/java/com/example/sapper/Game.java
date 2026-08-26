@@ -29,15 +29,15 @@ public class Game extends AppCompatActivity {
 
         MinsField m_field = new MinsField(rows, columns, mins, radiusCells);
 
-        m_binding.rows.setText(getString(R.string.rows) + rows);
+        m_binding.rows.setText(getString(R.string.height) + rows);
 
-        m_binding.columns.setText(getString(R.string.columns) + columns);
+        m_binding.columns.setText(getString(R.string.width) + columns);
 
         m_binding.mins.setText(getString(R.string.mins) + mins);
 
-        m_binding.showSeconds.setText(R.string.show_seconds);
+        m_binding.xRay.setText(R.string.x_ray);
 
-        m_binding.radiusCells.setText(R.string.radius_cells);
+        m_binding.radar.setText(R.string.radar);
 
         m_binding.field.setMap(m_field);
     }

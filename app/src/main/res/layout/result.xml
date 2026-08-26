@@ -53,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/rows"
+            android:text="@string/height"
             android:textSize="20sp"/>
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/columns"
+            android:text="@string/width"
             android:textSize="20sp"/>
 
         <TextView
@@ -120,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/show_seconds"
+            android:text="@string/x_ray"
             android:textSize="20sp"/>
 
         <TextView
@@ -128,7 +128,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/radius_cells"
+            android:text="@string/radar"
             android:textSize="20sp"/>
 
     </LinearLayout>

@@ -45,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/rows"
+            android:text="@string/height"
             android:textSize="18sp"/>
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/columns"
+            android:text="@string/width"
             android:textSize="18sp"/>
 
         <TextView
@@ -79,21 +79,21 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/show_seconds"
+            android:id="@+id/x_ray"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/show_seconds"
+            android:text="@string/x_ray"
             android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/radius_cells"
+            android:id="@+id/radar"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/radius_cells"
+            android:text="@string/radar"
             android:textSize="18sp"/>
 
     </LinearLayout>

@@ -4,11 +4,15 @@
     <color name="white">#FFFFFFFF</color>
     <color name="victory">#FF00FF00</color>
     <color name="defeat">#FFFF0000</color>
-    <color name="accent">#80C7102B</color>
-    <color name="cancel">#806C6E6B</color>
-    <color name="info">#80C9DE28</color>
-    <color name="function">#806041C4</color>
-    <color name="main">#20416FC4</color>
+    <color name="accent">#30CF05F7</color>
+    <color name="cancel">#306C6E6B</color>
+    <color name="info">#3805EBf7</color>
+    <color name="title">#7002F7AE</color>
+    <color name="function">#306041C4</color>
+    <color name="main">#40416FC4</color>
+    <color name="danger">#40AD2D2D</color>
+    <color name="bonus">#4031AD2D</color>
+    <color name="mechanics">#40DBE310</color>
     <color name="background_dark">#FF03031F</color>
     <color name="background_light">#FFBDBDF2</color>
 </resources>

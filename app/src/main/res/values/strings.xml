@@ -2,11 +2,11 @@
     <string name="app_name">"Sapper"</string>
     <string name="free_cell">"Free cell: "</string>
     <string name="begin_game">"GO!"</string>
-    <string name="rows">"rows: "</string>
-    <string name="columns">"columns: "</string>
-    <string name="mins">"mins: "</string>
-    <string name="show_seconds">"show seconds: "</string>
-    <string name="radius_cells">"Radius cells: "</string>
+    <string name="height">"Height"</string>
+    <string name="width">"Width"</string>
+    <string name="mins">"Mins"</string>
+    <string name="x_ray">"X-ray</string>
+    <string name="radar">"Radar"</string>
     <string name="victory">"Victory"</string>
     <string name="defeat">"Defeat"</string>
     <string name="percent">"%"</string>
