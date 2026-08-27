@@ -23,4 +23,6 @@
     <string name="minus">"-"</string>
     <string name="plus">"+"</string>
     <string name="random">"Рандом"</string>
+    <string name="cells">"Ячеек"</string>
+    <string name="seconds">"Секунд"</string>
 </resources>

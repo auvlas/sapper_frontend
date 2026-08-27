@@ -22,4 +22,6 @@
     <string name="minus">"-"</string>
     <string name="plus">"+"</string>
     <string name="random">"Random"</string>
+    <string name="cells">"Cells"</string>
+    <string name="seconds">"Seconds"</string>
 </resources>

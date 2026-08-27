@@ -50,7 +50,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="start|center"
@@ -77,32 +77,42 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:background="@drawable/accent"
-                        android:gravity="center_vertical|left"
+                        android:gravity="center_vertical|right"
                         android:paddingHorizontal="10dp"
                         android:textSize="24sp"
                         android:text="10"
                         android:inputType="number"/>
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|left"
+                        android:paddingHorizontal="10dp"
+                        android:textSize="24sp"
+                        android:text="@string/cells"
+                        android:layout_marginHorizontal="10dp"/>
+
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginRight="10dp"
                             android:textSize="24sp"
                             android:text="@string/minus"
                             android:background="@drawable/main"/>
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="24sp"
@@ -121,7 +131,7 @@
 
                     <Button
                         android:id="@+id/toggle1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -130,7 +140,7 @@
 
                     <Button
                         android:id="@+id/toggle2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -140,7 +150,7 @@
 
                     <Button
                         android:id="@+id/toggle3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -158,7 +168,7 @@
 
                     <Button
                         android:id="@+id/toggle4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -167,7 +177,7 @@
 
                     <Button
                         android:id="@+id/toggle5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -177,7 +187,7 @@
 
                     <Button
                         android:id="@+id/toggle6"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -202,7 +212,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="start|center"
@@ -229,32 +239,42 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:background="@drawable/accent"
-                        android:gravity="center_vertical|left"
+                        android:gravity="center_vertical|right"
                         android:paddingHorizontal="10dp"
                         android:textSize="24sp"
                         android:text="10"
                         android:inputType="number"/>
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|left"
+                        android:paddingHorizontal="10dp"
+                        android:textSize="24sp"
+                        android:text="@string/cells"
+                        android:layout_marginHorizontal="10dp"/>
+
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginRight="10dp"
                             android:textSize="24sp"
                             android:text="@string/minus"
                             android:background="@drawable/main"/>
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="24sp"
@@ -273,7 +293,7 @@
 
                     <Button
                         android:id="@+id/toggle11"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -282,7 +302,7 @@
 
                     <Button
                         android:id="@+id/toggle12"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -292,7 +312,7 @@
 
                     <Button
                         android:id="@+id/toggle13"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -310,7 +330,7 @@
 
                     <Button
                         android:id="@+id/toggle14"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -319,7 +339,7 @@
 
                     <Button
                         android:id="@+id/toggle15"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -329,7 +349,7 @@
 
                     <Button
                         android:id="@+id/toggle16"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -355,7 +375,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="start|center"
@@ -382,32 +402,42 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:background="@drawable/accent"
-                        android:gravity="center_vertical|left"
+                        android:gravity="center_vertical|right"
                         android:paddingHorizontal="10dp"
                         android:textSize="24sp"
                         android:text="10"
                         android:inputType="number"/>
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|left"
+                        android:paddingHorizontal="10dp"
+                        android:textSize="24sp"
+                        android:text="@string/cells"
+                        android:layout_marginHorizontal="10dp"/>
+
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginRight="10dp"
                             android:textSize="24sp"
                             android:text="@string/minus"
                             android:background="@drawable/danger"/>
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="24sp"
@@ -426,7 +456,7 @@
 
                     <Button
                         android:id="@+id/toggle21"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -435,7 +465,7 @@
 
                     <Button
                         android:id="@+id/toggle22"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -445,7 +475,7 @@
 
                     <Button
                         android:id="@+id/toggle23"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -463,7 +493,7 @@
 
                     <Button
                         android:id="@+id/toggle24"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -472,7 +502,7 @@
 
                     <Button
                         android:id="@+id/toggle25"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -482,7 +512,7 @@
 
                     <Button
                         android:id="@+id/toggle26"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -507,7 +537,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="start|center"
@@ -534,32 +564,42 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:background="@drawable/accent"
-                        android:gravity="center_vertical|left"
+                        android:gravity="center_vertical|right"
                         android:paddingHorizontal="10dp"
                         android:textSize="24sp"
                         android:text="0"
                         android:inputType="number"/>
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|left"
+                        android:paddingHorizontal="10dp"
+                        android:textSize="24sp"
+                        android:text="@string/seconds"
+                        android:layout_marginHorizontal="10dp"/>
+
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginRight="10dp"
                             android:textSize="24sp"
                             android:text="@string/minus"
                             android:background="@drawable/bonus"/>
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="24sp"
@@ -578,7 +618,7 @@
 
                     <Button
                         android:id="@+id/toggle31"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -587,7 +627,7 @@
 
                     <Button
                         android:id="@+id/toggle32"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -597,7 +637,7 @@
 
                     <Button
                         android:id="@+id/toggle33"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -615,7 +655,7 @@
 
                     <Button
                         android:id="@+id/toggle34"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -624,7 +664,7 @@
 
                     <Button
                         android:id="@+id/toggle35"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -634,7 +674,7 @@
 
                     <Button
                         android:id="@+id/toggle36"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -660,7 +700,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="start|center"
@@ -687,32 +727,42 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="80dp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:background="@drawable/accent"
+                        android:gravity="center_vertical|right"
+                        android:paddingHorizontal="10dp"
+                        android:textSize="24sp"
+                        android:text="2"
+                        android:inputType="number"/>
+                        
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center_vertical|left"
                         android:paddingHorizontal="10dp"
                         android:textSize="24sp"
-                        android:text="0"
-                        android:inputType="number"/>
+                        android:text="@string/cells"
+                        android:layout_marginHorizontal="10dp"/>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginRight="10dp"
                             android:textSize="24sp"
                             android:text="@string/minus"
                             android:background="@drawable/mechanics"/>
 
                         <Button
-                            android:layout_width="40dp"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="24sp"
@@ -731,7 +781,7 @@
 
                     <Button
                         android:id="@+id/toggle41"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -740,7 +790,7 @@
 
                     <Button
                         android:id="@+id/toggle42"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -750,7 +800,7 @@
 
                     <Button
                         android:id="@+id/toggle43"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -768,7 +818,7 @@
 
                     <Button
                         android:id="@+id/toggle44"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -777,7 +827,7 @@
 
                     <Button
                         android:id="@+id/toggle45"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -787,7 +837,7 @@
 
                     <Button
                         android:id="@+id/toggle46"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:textSize="24sp"
@@ -817,7 +867,7 @@
         <Button
             android:id="@+id/reset_button"
             android:padding="0dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/cancel"
@@ -832,7 +882,7 @@
         <Button
             android:id="@+id/start_game_button"
             android:padding="0dp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/accent"
