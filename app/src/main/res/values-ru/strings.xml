@@ -25,4 +25,8 @@
     <string name="random">"Рандом"</string>
     <string name="cells">"Ячеек"</string>
     <string name="seconds">"Секунд"</string>
+    <string name="settings_field">"Настройки поля"</string>
+    <string name="mechanics">"Миханики"</string>
+    <string name="bonus">"Бонусы"</string>
+    <string name="danger">"Опасность"</string>
 </resources>

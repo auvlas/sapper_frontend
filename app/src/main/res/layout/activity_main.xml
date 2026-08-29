@@ -39,160 +39,365 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/main"
-                android:padding="10dp"
-                android:layout_marginVertical="10dp">
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/main">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="start|center"
-                        android:textSize="24sp"
-                        android:text="@string/height"/>
+                    android:layout_height="60dp">
 
                     <Button
-                        android:id="@+id/random1"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cancel"
+                        android:layout_margin="10dp"/>
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/random"
-                        android:background="@drawable/cancel"
-                        android:textAllCaps="false"/>
+                        android:paddingHorizontal="20dp"
+                        android:textSize="28sp"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/settings_field"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/toggleGroup1"
                     android:layout_width="match_parent"
-                    android:layout_marginVertical="10dp"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/accent"
-                        android:gravity="center_vertical|right"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="10"
-                        android:inputType="number"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|left"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/cells"
-                        android:layout_marginHorizontal="10dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color"/>
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                        <Button
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:layout_marginRight="10dp"
-                            android:textSize="18sp"
-                            android:text="@string/minus"
-                            android:background="@drawable/main"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                        <Button
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textSize="18sp"
-                            android:text="@string/plus"
-                            android:background="@drawable/main"/>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start|center"
+                                android:textSize="24sp"
+                                android:text="@string/height"/>
+
+                            <Button
+                                android:id="@+id/random1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:paddingHorizontal="10dp"
+                                android:textSize="18sp"
+                                android:text="@string/random"
+                                android:background="@drawable/cancel"
+                                android:textAllCaps="false"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/toggleGroup1"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="10dp"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/accent"
+                                android:gravity="center_vertical|right"
+                                android:paddingHorizontal="10dp"
+                                android:textSize="18sp"
+                                android:text="10"
+                                android:inputType="number"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|left"
+                                android:paddingHorizontal="10dp"
+                                android:textSize="18sp"
+                                android:text="@string/cells"
+                                android:layout_marginHorizontal="10dp"/>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <Button
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:layout_marginRight="10dp"
+                                    android:textSize="18sp"
+                                    android:text="@string/minus"
+                                    android:background="@drawable/main"/>
+
+                                <Button
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:textSize="18sp"
+                                    android:text="@string/plus"
+                                    android:background="@drawable/main"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/toggleGroup2"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/toggle1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="5"
+                                android:background="@drawable/main"/>
+
+                            <Button
+                                android:id="@+id/toggle2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="10"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@drawable/main"/>
+
+                            <Button
+                                android:id="@+id/toggle3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="20"
+                                android:background="@drawable/main"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/toggleGroup3"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/toggle4"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="50"
+                                android:background="@drawable/main"/>
+
+                            <Button
+                                android:id="@+id/toggle5"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="100"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@drawable/info"/>
+
+                            <Button
+                                android:id="@+id/toggle6"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="1000"
+                                android:background="@drawable/accent"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color"/>
 
-                <LinearLayout
-                    android:id="@+id/toggleGroup2"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                    <Button
-                        android:id="@+id/toggle1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="5"
-                        android:background="@drawable/main"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/toggle2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="10"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/main"/>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start|center"
+                                android:textSize="24sp"
+                                android:text="@string/width"/>
 
-                    <Button
-                        android:id="@+id/toggle3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="20"
-                        android:background="@drawable/main"/>
+                            <Button
+                                android:id="@+id/random11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:paddingHorizontal="10dp"
+                                android:textSize="18sp"
+                                android:text="@string/random"
+                                android:background="@drawable/cancel"
+                                android:textAllCaps="false"/>
 
-                </LinearLayout>
+                        </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/toggleGroup3"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                        <LinearLayout
+                            android:id="@+id/toggleGroup11"
+                            android:layout_width="match_parent"
+                            android:layout_marginVertical="10dp"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/toggle4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="50"
-                        android:background="@drawable/main"/>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/accent"
+                                android:gravity="center_vertical|right"
+                                android:paddingHorizontal="10dp"
+                                android:textSize="18sp"
+                                android:text="10"
+                                android:inputType="number"/>
 
-                    <Button
-                        android:id="@+id/toggle5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="100"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/info"/>
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical|left"
+                                android:paddingHorizontal="10dp"
+                                android:textSize="18sp"
+                                android:text="@string/cells"
+                                android:layout_marginHorizontal="10dp"/>
 
-                    <Button
-                        android:id="@+id/toggle6"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="1000"
-                        android:background="@drawable/accent"/>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <Button
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:layout_marginRight="10dp"
+                                    android:textSize="18sp"
+                                    android:text="@string/minus"
+                                    android:background="@drawable/main"/>
+
+                                <Button
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:textSize="18sp"
+                                    android:text="@string/plus"
+                                    android:background="@drawable/main"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/toggleGroup12"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/toggle11"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="5"
+                                android:background="@drawable/main"/>
+
+                            <Button
+                                android:id="@+id/toggle12"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="10"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@drawable/main"/>
+
+                            <Button
+                                android:id="@+id/toggle13"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="20"
+                                android:background="@drawable/main"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/toggleGroup13"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/toggle14"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="50"
+                                android:background="@drawable/main"/>
+
+                            <Button
+                                android:id="@+id/toggle15"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="100"
+                                android:layout_marginHorizontal="10dp"
+                                android:background="@drawable/info"/>
+
+                            <Button
+                                android:id="@+id/toggle16"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="1000"
+                                android:background="@drawable/accent"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -202,322 +407,191 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/main"
-                android:padding="10dp">
+                android:background="@drawable/danger">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="start|center"
-                        android:textSize="24sp"
-                        android:text="@string/width"/>
+                    android:layout_height="60dp">
 
                     <Button
-                        android:id="@+id/random11"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cancel"
+                        android:layout_margin="10dp"/>
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/random"
-                        android:background="@drawable/cancel"
-                        android:textAllCaps="false"/>
+                        android:paddingHorizontal="20dp"
+                        android:textSize="28sp"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/danger"/>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/toggleGroup11"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_marginVertical="10dp"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    android:layout_height="1dp"
+                    android:background="@color/color"/>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/accent"
-                        android:gravity="center_vertical|right"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="10"
-                        android:inputType="number"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|left"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/cells"
-                        android:layout_marginHorizontal="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <Button
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginRight="10dp"
-                            android:textSize="18sp"
-                            android:text="@string/minus"
-                            android:background="@drawable/main"/>
+                            android:gravity="start|center"
+                            android:textSize="24sp"
+                            android:text="@string/mins"/>
 
                         <Button
-                            android:layout_width="0dp"
+                            android:id="@+id/random21"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:paddingHorizontal="10dp"
                             android:textSize="18sp"
-                            android:text="@string/plus"
-                            android:background="@drawable/main"/>
+                            android:text="@string/random"
+                            android:background="@drawable/cancel"
+                            android:textAllCaps="false"/>
 
                     </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/toggleGroup12"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/toggle11"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="5"
-                        android:background="@drawable/main"/>
-
-                    <Button
-                        android:id="@+id/toggle12"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="10"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/main"/>
-
-                    <Button
-                        android:id="@+id/toggle13"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="20"
-                        android:background="@drawable/main"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/toggleGroup13"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/toggle14"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="50"
-                        android:background="@drawable/main"/>
-
-                    <Button
-                        android:id="@+id/toggle15"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="100"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/info"/>
-
-                    <Button
-                        android:id="@+id/toggle16"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="1000"
-                        android:background="@drawable/accent"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/danger"
-                android:padding="10dp"
-                android:layout_marginVertical="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="start|center"
-                        android:textSize="24sp"
-                        android:text="@string/mins"/>
-
-                    <Button
-                        android:id="@+id/random21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/random"
-                        android:background="@drawable/cancel"
-                        android:textAllCaps="false"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/toggleGroup21"
-                    android:layout_width="match_parent"
-                    android:layout_marginVertical="10dp"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/accent"
-                        android:gravity="center_vertical|right"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="10"
-                        android:inputType="number"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|left"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/cells"
-                        android:layout_marginHorizontal="10dp"/>
-
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:id="@+id/toggleGroup21"
+                        android:layout_width="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
 
-                        <Button
+                        <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginRight="10dp"
+                            android:background="@drawable/accent"
+                            android:gravity="center_vertical|right"
+                            android:paddingHorizontal="10dp"
                             android:textSize="18sp"
-                            android:text="@string/minus"
+                            android:text="10"
+                            android:inputType="number"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|left"
+                            android:paddingHorizontal="10dp"
+                            android:textSize="18sp"
+                            android:text="@string/cells"
+                            android:layout_marginHorizontal="10dp"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <Button
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:layout_marginRight="10dp"
+                                android:textSize="18sp"
+                                android:text="@string/minus"
+                                android:background="@drawable/danger"/>
+
+                            <Button
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="@string/plus"
+                                android:background="@drawable/danger"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/toggleGroup22"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/toggle21"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="5"
                             android:background="@drawable/danger"/>
 
                         <Button
+                            android:id="@+id/toggle22"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="18sp"
-                            android:text="@string/plus"
+                            android:text="10"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@drawable/danger"/>
+
+                        <Button
+                            android:id="@+id/toggle23"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="20"
                             android:background="@drawable/danger"/>
 
                     </LinearLayout>
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/toggleGroup23"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/toggleGroup22"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/toggle24"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="50"
+                            android:background="@drawable/danger"/>
 
-                    <Button
-                        android:id="@+id/toggle21"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="5"
-                        android:background="@drawable/danger"/>
+                        <Button
+                            android:id="@+id/toggle25"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="100"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@drawable/info"/>
 
-                    <Button
-                        android:id="@+id/toggle22"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="10"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/danger"/>
+                        <Button
+                            android:id="@+id/toggle26"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="1000"
+                            android:background="@drawable/accent"/>
 
-                    <Button
-                        android:id="@+id/toggle23"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="20"
-                        android:background="@drawable/danger"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/toggleGroup23"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/toggle24"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="50"
-                        android:background="@drawable/danger"/>
-
-                    <Button
-                        android:id="@+id/toggle25"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="100"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/info"/>
-
-                    <Button
-                        android:id="@+id/toggle26"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="1000"
-                        android:background="@drawable/accent"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -528,158 +602,191 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/bonus"
-                android:padding="10dp">
+                android:layout_marginVertical="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="start|center"
-                        android:textSize="24sp"
-                        android:text="@string/x_ray"/>
+                    android:layout_height="60dp">
 
                     <Button
-                        android:id="@+id/random31"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cancel"
+                        android:layout_margin="10dp"/>
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/random"
-                        android:background="@drawable/cancel"
-                        android:textAllCaps="false"/>
+                        android:paddingHorizontal="20dp"
+                        android:textSize="28sp"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/bonus"/>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/toggleGroup31"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_marginVertical="10dp"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    android:layout_height="1dp"
+                    android:background="@color/color"/>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/accent"
-                        android:gravity="center_vertical|right"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="0"
-                        android:inputType="number"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|left"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/seconds"
-                        android:layout_marginHorizontal="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <Button
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginRight="10dp"
+                            android:gravity="start|center"
+                            android:textSize="24sp"
+                            android:text="@string/x_ray"/>
+
+                        <Button
+                            android:id="@+id/random31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingHorizontal="10dp"
                             android:textSize="18sp"
-                            android:text="@string/minus"
+                            android:text="@string/random"
+                            android:background="@drawable/cancel"
+                            android:textAllCaps="false"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/toggleGroup31"
+                        android:layout_width="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/accent"
+                            android:gravity="center_vertical|right"
+                            android:paddingHorizontal="10dp"
+                            android:textSize="18sp"
+                            android:text="0"
+                            android:inputType="number"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|left"
+                            android:paddingHorizontal="10dp"
+                            android:textSize="18sp"
+                            android:text="@string/seconds"
+                            android:layout_marginHorizontal="10dp"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <Button
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:layout_marginRight="10dp"
+                                android:textSize="18sp"
+                                android:text="@string/minus"
+                                android:background="@drawable/bonus"/>
+
+                            <Button
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="@string/plus"
+                                android:background="@drawable/bonus"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/toggleGroup32"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/toggle31"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="0"
                             android:background="@drawable/bonus"/>
 
                         <Button
+                            android:id="@+id/toggle32"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="18sp"
-                            android:text="@string/plus"
+                            android:text="1"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@drawable/bonus"/>
+
+                        <Button
+                            android:id="@+id/toggle33"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="3"
                             android:background="@drawable/bonus"/>
 
                     </LinearLayout>
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/toggleGroup33"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/toggleGroup32"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/toggle34"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="5"
+                            android:background="@drawable/bonus"/>
 
-                    <Button
-                        android:id="@+id/toggle31"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="0"
-                        android:background="@drawable/bonus"/>
+                        <Button
+                            android:id="@+id/toggle35"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="10"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@drawable/info"/>
 
-                    <Button
-                        android:id="@+id/toggle32"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="1"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/bonus"/>
+                        <Button
+                            android:id="@+id/toggle36"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="100"
+                            android:background="@drawable/accent"/>
 
-                    <Button
-                        android:id="@+id/toggle33"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="3"
-                        android:background="@drawable/bonus"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/toggleGroup33"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/toggle34"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="5"
-                        android:background="@drawable/bonus"/>
-
-                    <Button
-                        android:id="@+id/toggle35"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="10"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/info"/>
-
-                    <Button
-                        android:id="@+id/toggle36"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="100"
-                        android:background="@drawable/accent"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -689,160 +796,192 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/mechanics"
-                android:padding="10dp"
-                android:layout_marginTop="10dp">
+                android:background="@drawable/mechanics">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="start|center"
-                        android:textSize="24sp"
-                        android:text="@string/radar"/>
+                    android:layout_height="60dp">
 
                     <Button
-                        android:id="@+id/random41"
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cancel"
+                        android:layout_margin="10dp"/>
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/random"
-                        android:background="@drawable/cancel"
-                        android:textAllCaps="false"/>
+                        android:paddingHorizontal="20dp"
+                        android:textSize="28sp"
+                        android:gravity="center_vertical|left"
+                        android:text="@string/mechanics"/>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/toggleGroup41"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_marginVertical="10dp"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                    android:layout_height="1dp"
+                    android:background="@color/color"/>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/accent"
-                        android:gravity="center_vertical|right"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="2"
-                        android:inputType="number"/>
-                        
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|left"
-                        android:paddingHorizontal="10dp"
-                        android:textSize="18sp"
-                        android:text="@string/cells"
-                        android:layout_marginHorizontal="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <Button
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:layout_marginRight="10dp"
+                            android:gravity="start|center"
+                            android:textSize="24sp"
+                            android:text="@string/radar"/>
+
+                        <Button
+                            android:id="@+id/random41"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingHorizontal="10dp"
                             android:textSize="18sp"
-                            android:text="@string/minus"
+                            android:text="@string/random"
+                            android:background="@drawable/cancel"
+                            android:textAllCaps="false"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/toggleGroup41"
+                        android:layout_width="match_parent"
+                        android:layout_marginVertical="10dp"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/accent"
+                            android:gravity="center_vertical|right"
+                            android:paddingHorizontal="10dp"
+                            android:textSize="18sp"
+                            android:text="2"
+                            android:inputType="number"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|left"
+                            android:paddingHorizontal="10dp"
+                            android:textSize="18sp"
+                            android:text="@string/cells"
+                            android:layout_marginHorizontal="10dp"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <Button
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:layout_marginRight="10dp"
+                                android:textSize="18sp"
+                                android:text="@string/minus"
+                                android:background="@drawable/mechanics"/>
+
+                            <Button
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="18sp"
+                                android:text="@string/plus"
+                                android:background="@drawable/mechanics"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/toggleGroup42"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/toggle41"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="1"
                             android:background="@drawable/mechanics"/>
 
                         <Button
+                            android:id="@+id/toggle42"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="18sp"
-                            android:text="@string/plus"
+                            android:text="2"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@drawable/mechanics"/>
+
+                        <Button
+                            android:id="@+id/toggle43"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="3"
                             android:background="@drawable/mechanics"/>
 
                     </LinearLayout>
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/toggleGroup43"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/toggleGroup42"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/toggle44"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="5"
+                            android:background="@drawable/mechanics"/>
 
-                    <Button
-                        android:id="@+id/toggle41"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="1"
-                        android:background="@drawable/mechanics"/>
+                        <Button
+                            android:id="@+id/toggle45"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="10"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@drawable/info"/>
 
-                    <Button
-                        android:id="@+id/toggle42"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="2"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/mechanics"/>
+                        <Button
+                            android:id="@+id/toggle46"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="18sp"
+                            android:text="20"
+                            android:background="@drawable/accent"/>
 
-                    <Button
-                        android:id="@+id/toggle43"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="3"
-                        android:background="@drawable/mechanics"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/toggleGroup43"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/toggle44"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="5"
-                        android:background="@drawable/mechanics"/>
-
-                    <Button
-                        android:id="@+id/toggle45"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="10"
-                        android:layout_marginHorizontal="10dp"
-                        android:background="@drawable/info"/>
-
-                    <Button
-                        android:id="@+id/toggle46"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="20"
-                        android:background="@drawable/accent"/>
+                    </LinearLayout>
 
                 </LinearLayout>
 

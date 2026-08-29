@@ -16,4 +16,5 @@
     <color name="background_dark">#FF03031F</color>
     <color name="background_light">#FFBDBDF2</color>
     <color name="background">@color/background_dark</color>
+    <color name="color">@color/white</color>
 </resources>

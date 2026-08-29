@@ -24,4 +24,8 @@
     <string name="random">"Random"</string>
     <string name="cells">"Cells"</string>
     <string name="seconds">"Seconds"</string>
+    <string name="settings_field">"Settings field"</string>
+    <string name="mechanics">"Mechanics"</string>
+    <string name="bonus">"Bonus"</string>
+    <string name="danger">"Danger"</string>
 </resources>
