@@ -35,32 +35,14 @@
                 android:text="@string/app_name"
                 android:background="@drawable/title"/>
 
-            <LinearLayout
+            <com.example.sapper.TighteningLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginVertical="10dp"
-                android:background="@drawable/main">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp">
-
-                    <Button
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cancel"
-                        android:layout_margin="10dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="20dp"
-                        android:textSize="28sp"
-                        android:gravity="center_vertical|left"
-                        android:text="@string/settings_field"/>
-
-                </LinearLayout>
+                android:background="@drawable/main"
+                app:backgroundVisibleButton="@drawable/cancel"
+                app:textSizeTitle="28sp"
+                app:textTitle="@string/settings_field">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -401,33 +383,15 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.example.sapper.TighteningLayout>
 
-            <LinearLayout
+            <com.example.sapper.TighteningLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/danger">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp">
-
-                    <Button
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cancel"
-                        android:layout_margin="10dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="20dp"
-                        android:textSize="28sp"
-                        android:gravity="center_vertical|left"
-                        android:text="@string/danger"/>
-
-                </LinearLayout>
+                android:background="@drawable/danger"
+                app:backgroundVisibleButton="@drawable/cancel"
+                app:textSizeTitle="28sp"
+                app:textTitle="@string/danger">
 
                 <View
                     android:layout_width="match_parent"
@@ -595,34 +559,17 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.example.sapper.TighteningLayout>
 
-            <LinearLayout
+
+            <com.example.sapper.TighteningLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginVertical="10dp"
                 android:background="@drawable/bonus"
-                android:layout_marginVertical="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp">
-
-                    <Button
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cancel"
-                        android:layout_margin="10dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="20dp"
-                        android:textSize="28sp"
-                        android:gravity="center_vertical|left"
-                        android:text="@string/bonus"/>
-
-                </LinearLayout>
+                app:backgroundVisibleButton="@drawable/cancel"
+                app:textSizeTitle="28sp"
+                app:textTitle="@string/bonus">
 
                 <View
                     android:layout_width="match_parent"
@@ -790,33 +737,15 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.example.sapper.TighteningLayout>
 
-            <LinearLayout
+            <com.example.sapper.TighteningLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/mechanics">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp">
-
-                    <Button
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/cancel"
-                        android:layout_margin="10dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="20dp"
-                        android:textSize="28sp"
-                        android:gravity="center_vertical|left"
-                        android:text="@string/mechanics"/>
-
-                </LinearLayout>
+                android:background="@drawable/mechanics"
+                app:backgroundVisibleButton="@drawable/cancel"
+                app:textSizeTitle="28sp"
+                app:textTitle="@string/mechanics">
 
                 <View
                     android:layout_width="match_parent"
@@ -985,7 +914,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.example.sapper.TighteningLayout>
 
         </LinearLayout>
 

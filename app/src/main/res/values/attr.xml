@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TighteningLayout">
+        <attr name="openLabelVisibleButton" format="string" />
+        <attr name="closeLabelVisibleButton" format="string" />
+        <attr name="textSizeVisibleButton" format="dimension" />
+        <attr name="backgroundVisibleButton" format="reference|color" />
+        <attr name="textTitle" format="string" />
+        <attr name="textSizeTitle" format="dimension" />
+    </declare-styleable>
+</resources>
